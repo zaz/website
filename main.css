@@ -93,7 +93,6 @@ nav li h2, nav li div {
 	margin: 0;
 	padding: 0;
 	margin-top: 0;
-	padding: 0.5rem;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
@@ -114,25 +113,20 @@ nav li div {
 nav h2, nav div {
 	color: #222;
 }
-nav li div {
+
+nav li div,
+nav li h2:after {
 	visibility: hidden;
 	opacity: 0;
-	background-color: #ddd;
 	transition: 0.5s;
 	position: absolute;
 }
-
-nav li:hover h2:after {
-	visibility: visible;
-	opacity: 1;
+nav li div {
+	background-color: #ddd;
+	padding: 0.5rem;
 }
-
 /* Add a triangle to make the tooltip look like a speech bubble */
 nav li h2:after {
-	position: absolute;
-	visibility: hidden;
-	opacity: 0;
-	transition: 0.5s;
 	top: 2.55rem;
 	left: 50%;
 	margin: 2px -0.25rem;
@@ -143,6 +137,17 @@ nav li h2:after {
 	content: " ";
 	font-size: 0;
 	line-height: 0;
+}
+
+
+nav li:hover h2:after {
+	visibility: visible;
+	opacity: 1;
+}
+
+nav li:hover h2 {
+	transition: 0.5s;
+	padding: 0.3rem;
 }
 
 nav li:hover div {
