@@ -64,9 +64,12 @@ header h1 {
 	margin: 0;
 }
 
+key-fingerprint {
+	vertical-align: middle;
+}
 key-fingerprint svg {
-	height: 11rem;
-	padding: 3rem;
+	padding: 0;
+	margin: 0;
 }
 
 /* XXX fix */

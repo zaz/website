@@ -38,7 +38,7 @@ $(document).ready( function() {
 		svg.appendChild(g);
 
 		var title = svg_create("title");
-		title.innerHTML = "A random RSA fingerprint (" + this.innerHTML + ")";
+		title.innerHTML = this.innerHTML;
 		g.appendChild(title);
 
 		var color_map = {0:"#222", 1:"#666", 2:"#aaa", 3:"#eee"};
