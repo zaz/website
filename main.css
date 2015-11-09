@@ -112,13 +112,15 @@ nav li div {
 }
 /* Add a triangle to make the tooltip look like a speech bubble */
 nav li h2:after {
-	top: 2.55rem;
+	top: 0;
 	left: 50%;
-	margin: 2px -0.25rem;
+	/* -0.25 to fix alignment error due to width */
+	margin: 2.7rem -0.25rem;
 	width: 0;
-	border-bottom: 5px solid #ddd;
-	border-right: 5px solid transparent;
-	border-left: 5px solid transparent;
+	/* add 0.05rem overlap so rendering error will not cause separation */
+	border-bottom: 0.35rem solid #ddd;
+	border-right: 0.35rem solid transparent;
+	border-left: 0.35rem solid transparent;
 	content: " ";
 	font-size: 0;
 	line-height: 0;
