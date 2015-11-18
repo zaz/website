@@ -24,9 +24,8 @@ main {
 	-webkit-align-items: center;
 	align-items: center;
 	justify-content: center;
+	text-align: center;
 }
-
-main div { text-align: center; }
 
 nav ul {
 	margin: 0;
@@ -44,11 +43,9 @@ nav a {
 	color: inherit;
 	display: inline-block;
 	padding: 1rem 2rem;
-	border-radius: 2px;
 	background-clip: padding-box;
 }
 nav a:hover {
-	transition: 0.5s;
 	color: #222;
 	background-color: #ddd;
 }
@@ -64,12 +61,18 @@ header h1 {
 	margin: 0;
 }
 
+
 svg {
 	vertical-align: middle;
 	margin-bottom: 1rem;
 }
 
 
+nav a, nav li div {
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 1px;
+}
 
 nav ul { position: relative; }
 nav a { position: relative; }
@@ -81,39 +84,27 @@ nav li h2, nav li div {
 	right: 0;
 	margin: 0;
 	padding: 0;
-	margin-top: 0;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
 	text-align: center;
 	font-size: 1.1rem;
+	color: #222;
 }
-
 nav li h2 {
 	font-size: 1.4rem;
 	color: #ddd;
 }
 nav li div {
-	left: 0;
-	right: 0;
 	margin-top: 3rem;
-}
-
-nav h2, nav div {
-	color: #222;
+	background-color: #ddd;
+	padding: 0.5rem;
 }
 
 nav li div,
 nav li h2:after {
 	visibility: hidden;
 	opacity: 0;
-	transition: 0.5s;
 	position: absolute;
 }
-nav li div {
-	background-color: #ddd;
-	padding: 0.5rem;
-}
+
 /* Add a triangle to make the tooltip look like a speech bubble */
 nav li h2:after {
 	top: 0;
@@ -131,17 +122,19 @@ nav li h2:after {
 }
 
 
-nav li:hover h2:after {
-	visibility: visible;
-	opacity: 1;
-}
-
-nav li:hover h2 {
-	transition: 0.5s;
-	padding: 0.3rem;
-}
-
+nav li:hover h2:after,
 nav li:hover div {
 	visibility: visible;
 	opacity: 1;
+}
+
+nav li h2,
+nav li h2:after,
+nav div {
+	transition: 0.5s;
+}
+
+/* Move icon labels slightly on hover */
+nav li:hover h2 {
+	padding: 0.3rem;
 }
