@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# 2016-01-14 0
+
+/
+/zazbrown.asc
+
+/main.css
+/static.js
+/main.js
+http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400
+http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css
+http://code.jquery.com/jquery-2.1.4.min.js
+http://fonts.gstatic.com/s/ptsans/v8/ATKpv8nLYAKUYexo8iqqrg.woff2
+http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/fonts/fontawesome-webfont.woff2?v=4.4.0
