@@ -9,9 +9,11 @@ html, body, main {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  letter-spacing: -.025rem;
+	font-family: "PT Sans", Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	letter-spacing: -.025rem;
+	line-height: 1;
+	padding: 0 0 0.25em;
 }
 
 main {
@@ -44,6 +46,8 @@ nav a {
 	display: inline-block;
 	padding: 1rem 2rem;
 	background-clip: padding-box;
+	margin: 0 0 3rem;
+	text-decoration: none;
 }
 nav a:hover {
 	color: #222;
@@ -93,7 +97,6 @@ nav li h2 {
 	color: #ddd;
 }
 nav li div {
-	margin-top: 3rem;
 	background-color: #ddd;
 	padding: 0.5rem;
 }
