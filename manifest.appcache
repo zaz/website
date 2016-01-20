@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2016-01-15 1
+# 2016-01-20 0
 
 /
 /zazbrown.asc
@@ -12,3 +12,9 @@ http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.cs
 http://code.jquery.com/jquery-2.1.4.min.js
 http://fonts.gstatic.com/s/ptsans/v8/ATKpv8nLYAKUYexo8iqqrg.woff2
 http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/fonts/fontawesome-webfont.woff2?v=4.4.0
+
+NETWORK:
+*
+
+FALLBACK:
+/ /404.html
