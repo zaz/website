@@ -1,0 +1,133 @@
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:300');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font: 14px/1 'Open Sans', sans-serif;
+  color: #555;
+  background: #e5e5e5;
+}
+
+.gallery {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 5px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.3);
+}
+
+.gallery > figure {
+  position: relative;
+  float: left;
+  padding: 5px;
+  width: 330px;
+  height: 350px;
+  min-height: 350px;
+  overflow: hidden;
+  background-color: inherit;
+}
+.gallery figure h3 {
+}
+.gallery figure summary {
+  float: right;
+  margin-top: -1.6em;
+}
+
+.gallery > figure > figcaption {
+  padding: 1em;
+}
+.gallery > figure > figcaption > h3 {
+  font-family: "PT Sans";
+  padding-bottom: 0.5em;
+}
+.gallery > figure > figcaption > details > p {
+  font-size: 0.7em;
+}
+
+.gallery > figure > img {
+  display: block;
+  width: 320px;
+  transition: .1s transform;
+  transform: translateZ(0); /* hack */
+}
+
+.gallery > figure:hover {
+  z-index: 1;
+}
+
+.gallery > figure:hover {
+  transform: scale(1.5,1.5);
+  transition: .3s transform;
+}
+
+.cf:before, .cf:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+
+.cf:after {
+  clear: both;
+}
+
+h1 {
+  margin: 40px 0;
+  font-size: 30px;
+  font-weight: 300;
+  text-align: center;
+}
+
+/* todo list style */
+summary::-webkit-details-marker {
+  display: none;
+}
+details ul {
+  margin: 0 0 0 -0.5em;
+}
+details li {
+  list-style-type: none;
+  font-weight: bold;
+  font-size: .8em;
+  transition: margin 0.3s;
+  /* background-color: #ff6; */
+
+  display: inline-block;
+  padding: 0.5em 0.75em;
+  margin: 0.5em .5em 0 -.5em;
+  border: 1px solid #333;
+  border-radius: 1em;
+}
+li.done {
+  background-color: #5d5;
+  border: 1px solid #292;
+}
+li.wip {
+  background-color: #ff0;
+  border: 1px solid #992;
+}
+li.wip:after {
+  content: " \1f552"
+}
+summary {
+  transition: font-size 0.3s;
+  font-weight: bold;
+}
+details.done summary {
+  color: #292;
+}
+details.wip summary {
+  color: #eb0;
+}
+details.done li {
+  color: #292;
+  /* font-weight: bold; */
+  text-decoration: line-through;
+}
+details.done li:after, li.done:after {
+  content: " \2713";
+}
