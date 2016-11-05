@@ -40,6 +40,7 @@ footer {
   background-color: rgba(255, 255, 255, 0.4);
   box-shadow: 0 0 1px #000;
   transform-origin: top;
+  transition: all .25s;
 }
 .gallery figure h3 {
 }
@@ -66,7 +67,6 @@ footer {
 .gallery > figure:hover {
   z-index: 1;
   transform: scale(1.5,1.5);
-  transition: all .3s;
   background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -100,7 +100,7 @@ details p {
 details li {
   list-style-type: none;
   font-weight: bold;
-  font-size: .8em;
+  font-size: 11px;
   transition: margin 0.3s;
 
   display: inline-block;
