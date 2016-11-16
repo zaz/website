@@ -8,15 +8,17 @@
 
 body {
   font: 14px/1 'Open Sans', sans-serif;
-  color: #555;
+  color: #444;
   /* background: #e5e5e5; */
-  background-image: url("/r/wood.jpg");
+  background-image: url("/r/blueprint.jpg");
+  background-position: center top;
   min-height: 100%;
 }
 
 h1 {
   line-height: 7em;
   font-weight: bold;
+  color: #222;
 }
 
 footer {
@@ -37,7 +39,7 @@ footer {
   height: 350px;
   min-height: 350px;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.7);
   box-shadow: 0 0 1px #000;
   transform-origin: top;
   transition: all .25s;
@@ -136,7 +138,7 @@ li.del:after {  /* does nothing */
   display: none;
 }
 details.wip summary {
-  color: #eb0;
+  color: #d90;
 }
 li.wip {
   background-color: #ff0;
