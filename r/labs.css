@@ -13,6 +13,7 @@ body {
   background-image: url("/r/blueprint.jpg");
   background-position: center top;
   min-height: 100%;
+  padding-top: 4em;
 }
 
 h1 {
