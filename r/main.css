@@ -147,28 +147,3 @@ nav div {
 nav li:hover h2 {
 	padding: 0.3rem;
 }
-
-ul.mit {
-	padding: 4rem 0;
-}
-ul.mit li {
-	display: inline-block;
-	white-space: pre;
-	margin: 0.4rem 0;
-}
-ul.mit li:after { content: "\00b7"; }
-ul.mit li:last-child:after { content: ""; }
-ul.mit a {
-	color: inherit;
-	padding: 0.6rem 1rem;
-	margin: 0 -0.3rem 0 -0.5rem;  /* to account for spaces from newlines after lis*/
-	-webkit-border-radius: 1px;
-	-moz-border-radius: 1px;
-	border-radius: 1px;
-	transition: 0.5s;
-}
-ul.mit a:hover {
-	color: #222;
-	background-color: #ddd;
-	text-decoration: none;
-}
