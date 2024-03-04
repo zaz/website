@@ -1,0 +1,209 @@
+#+reveal_theme: serif
+#+LaTeX_header: \usepackage{svg}
+#+options: timestamp:nil toc:1 num:nil
+#+bibliography: ../../../../cite/cs.bib
+#+title: BeRGeR
+#+author: Zaz Brown
+#+subtitle: Using Braids for Byzantine-Resistant Geometric Routing on Polyhedral Networks
+
+* Problem Definition
+
+|------------------+---------------------------------------------------|
+| *Online routing* | Nodes are *myopic* (only see immediate neighbors) |
+|------------------+---------------------------------------------------|
+
+Robust routing on low-resource devices
+
+- IoT
+- Sensor networks
+- Vehicular networks
+
+1 faulty "Byzantine" node
+
+** Using Braids for Byzantine-Resistant *Geometric Routing* on Polyhedral Networks
+
+|----------------------------------+-----------------------------------------|
+| *Offline routing*                | Routing tables (nodes store directions) |
+| *Geometric routing*              |                                         |
+|     *Greedy routing*             | Go to node closest to destination       |
+|     *Face routing*               | Always turn right (or left)             |
+|----------------------------------+-----------------------------------------|
+
+** Using Braids for *Byzantine-Resistant* Geometric Routing on Polyhedral Networks
+
+|------------------+-------------------------------|
+| *Byzantine node* | Node that behaves arbitrarily |
+|------------------+-------------------------------|
+
+[[./img/Among Us crewmate.svg]]
+
+** Using Braids for Byzantine-Resistant Geometric Routing on *Polyhedral Networks*
+
+|-------------------+---------------------------------------------------------|
+| *Network*         | Graph                                                   |
+| *Polyhedral*      |                                                         |
+|     *Planar*      | No edges intersect                                      |
+|     *3-Connected* | To disconnect the network, you need to remove 3 nodes   |
+|     *3-Connected* | \(\exists\) 3 disjoint paths between each pair of nodes |
+|-------------------+---------------------------------------------------------|
+
+#+BEGIN_NOTES
+*Planar* \because \exists algorithms to planarize; simplicity
+*3-connected* \because it is necessary
+*Menger's theorem*: 3-connected equivalence
+#+END_NOTES
+
+** Using *Braids* for Byzantine-Resistant Geometric Routing on Polyhedral Networks
+
+Exactly what they sound like.
+
+
+* Naïve approach
+
+Route along 3 disjoint paths
+
+\begin{align*}
+\exists i,j \ : \ m_i &= m_j, \\
+                  p_i &\ \cap \ p_j = \emptyset
+\end{align*}
+
+For each node, find 2 disjoint paths that skip it.
+
+#+BEGIN_NOTES
+We *need* to use 3-connectivity.
+#+END_NOTES
+
+** Naïve approach
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/network.svg]]
+
+** Naïve approach
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/3-disjoint.svg]]
+
+#+BEGIN_NOTES
+*Hard* to do online.
+#+END_NOTES
+
+
+* Generalized approach
+
+Route along /collectively/ disjoint paths
+
+\begin{align*}
+\exists i,j,k,... \ : \ m_i &= m_j = m_k = \cdots, \\
+                  p_i &\ \cap \ p_j \ \cap \ p_k \ \cap \ \cdots = \emptyset
+\end{align*}
+
+For each node, find a set of collectively disjoint paths that skip it.
+
+** Remove edges that intersect st-line
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/network.svg]]
+
+** Remove edges that intersect st-line
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/remove-edges-that-intersect-st.svg]]
+
+** Route along both sides
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/rhr-and-lhr.svg]]
+
+** Proof
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/dual-graph.svg]]
+
+** Proof
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/dual-graph-edge-contraction.svg]]
+
+** Route along both sides
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/rhr-and-lhr.svg]]
+
+** Braids
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/rhr-and-lhr-and-braids.svg]]
+
+
+* Paper
+
+[[./img/paper.png]]
+
+** Remove edges that intersect st-line
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/remove-edges-that-intersect-st.svg]]
+
+** Proof
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/dual-graph.svg]]
+
+** Proof
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/dual-graph-edge-contraction.svg]]
+
+** Counterexample
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/counterexample.svg]]
+
+** Counterexample
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/counterexample-faded.svg]]
+
+
+* Acknowledgements
+
+Prof. Mikhail Nesterenko, for supervising the research
+
+Prof. Gokarna Sharma, for his feedback
+
+Prof. Jenya Soprunova, for her feedback
+
+Prof. Darci Kracht, for advice on the presentation
+
+
+* Questions?
+
+zaz@zazbrown.com
