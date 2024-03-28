@@ -211,3 +211,35 @@ nav li:hover h2 {
 		border-bottom: 0.35rem solid #ddd;
 	}
 }
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+	html, body, main {
+		color: #fff;
+		background-color: #000;
+	}
+
+	nav a:hover {
+		color: #000;
+		background-color: #fff;
+	}
+
+	nav a.dull { color: #888; }
+	nav a.dull:hover {
+		color: #888;
+		background-color: inherit;
+	}
+
+	nav li h2, nav li div {
+		color: #000;
+	}
+	nav li h2 {
+		color: #fff;
+	}
+	nav li div {
+		background-color: #fff;
+	}
+
+	nav li h2:after {
+		border-bottom: 0.35rem solid #fff;
+	}
+}
