@@ -77,13 +77,14 @@ nav li {
 
 nav a {
 	height: 7rem;
-	width: 5rem;
+	width: 7rem;
 	color: inherit;
 	display: inline-block;
-	padding: 1rem 2rem;
+	padding: 1rem;
 	background-clip: padding-box;
 	margin: 0 0 3rem;
 	text-decoration: none;
+	vertical-align: middle;
 }
 nav a:hover {
 	color: var(--main-bg-color);
