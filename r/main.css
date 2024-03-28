@@ -1,11 +1,11 @@
 html, body, main {
 	height: 100%;
 	margin: 0;
-	color: #ddd;
+	color: #222;
 	font-family: "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	line-height: 1.5;
-	background-color: #222;
+	background-color: #ddd;
 }
 
 main img {
@@ -56,8 +56,8 @@ nav a {
 	text-decoration: none;
 }
 nav a:hover {
-	color: #222;
-	background-color: #ddd;
+	color: #ddd;
+	background-color: #222;
 }
 
 nav a.dull { color: #888; }
@@ -96,14 +96,14 @@ nav li h2, nav li div {
 	padding: 0;
 	text-align: center;
 	font-size: 1.1rem;
-	color: #222;
+	color: #ddd;
 }
 nav li h2 {
 	font-size: 1.4rem;
-	color: #ddd;
+	color: #222;
 }
 nav li div {
-	background-color: #ddd;
+	background-color: #222;
 	padding: 0.5rem;
 }
 
@@ -122,7 +122,7 @@ nav li h2:after {
 	margin: 2.7rem -0.25rem;
 	width: 0;
 	/* add 0.05rem overlap so rendering error will not cause separation */
-	border-bottom: 0.35rem solid #ddd;
+	border-bottom: 0.35rem solid #222;
 	border-right: 0.35rem solid transparent;
 	border-left: 0.35rem solid transparent;
 	content: " ";
@@ -146,4 +146,36 @@ nav div {
 /* Move icon labels slightly on hover */
 nav li:hover h2 {
 	padding: 0.3rem;
+}
+
+@media (prefers-color-scheme: dark) {
+	html, body, main {
+		color: #ddd;
+		background-color: #222;
+	}
+
+	nav a:hover {
+		color: #222;
+		background-color: #ddd;
+	}
+
+	nav a.dull { color: #888; }
+	nav a.dull:hover {
+		color: #888;
+		background-color: inherit;
+	}
+
+	nav li h2, nav li div {
+		color: #222;
+	}
+	nav li h2 {
+		color: #ddd;
+	}
+	nav li div {
+		background-color: #ddd;
+	}
+
+	nav li h2:after {
+		border-bottom: 0.35rem solid #ddd;
+	}
 }
