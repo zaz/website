@@ -1,11 +1,39 @@
+:root {
+  --main-color: #222;
+  --main-bg-color: #ddd;
+  --middle-color: #888;
+}
+
+
+@media print, (prefers-contrast: more) {
+	:root {
+		--main-color: #000;
+		--main-bg-color: #fff;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--main-color: #ddd;
+		--main-bg-color: #222;
+	}
+}
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+	:root {
+		--main-color: #fff;
+		--main-bg-color: #000;
+	}
+}
+
 html, body, main {
 	height: 100%;
 	margin: 0;
-	color: #222;
+	color: var(--main-color);
 	font-family: "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	line-height: 1.5;
-	background-color: #ddd;
+	background-color: var(--main-bg-color);
 }
 
 main img {
@@ -56,8 +84,8 @@ nav a {
 	text-decoration: none;
 }
 nav a:hover {
-	color: #ddd;
-	background-color: #222;
+	color: var(--main-bg-color);
+	background-color: var(--main-color);
 }
 
 nav a.dull { color: #888; }
@@ -96,14 +124,14 @@ nav li h2, nav li div {
 	padding: 0;
 	text-align: center;
 	font-size: 1.1rem;
-	color: #ddd;
+	color: var(--main-bg-color);
 }
 nav li h2 {
 	font-size: 1.4rem;
-	color: #222;
+	color: var(--main-color);
 }
 nav li div {
-	background-color: #222;
+	background-color: var(--main-color);
 	padding: 0.5rem;
 }
 
@@ -122,7 +150,7 @@ nav li h2:after {
 	margin: 2.7rem -0.25rem;
 	width: 0;
 	/* add 0.05rem overlap so rendering error will not cause separation */
-	border-bottom: 0.35rem solid #222;
+	border-bottom: 0.35rem solid var(--main-color);
 	border-right: 0.35rem solid transparent;
 	border-left: 0.35rem solid transparent;
 	content: " ";
@@ -146,100 +174,4 @@ nav div {
 /* Move icon labels slightly on hover */
 nav li:hover h2 {
 	padding: 0.3rem;
-}
-
-@media print, (prefers-contrast: more) {
-	html, body, main {
-		color: #fff;
-		background-color: #000;
-	}
-
-	nav a:hover {
-		color: #fff;
-		background-color: #000;
-	}
-
-	nav a.dull { color: #888; }
-	nav a.dull:hover {
-		color: #888;
-		background-color: inherit;
-	}
-
-	nav li h2, nav li div {
-		color: #fff;
-	}
-	nav li h2 {
-		color: #000;
-	}
-	nav li div {
-		background-color: #000;
-	}
-
-	nav li h2:after {
-		border-bottom: 0.35rem solid #000;
-	}
-}
-
-@media (prefers-color-scheme: dark) {
-	html, body, main {
-		color: #ddd;
-		background-color: #222;
-	}
-
-	nav a:hover {
-		color: #222;
-		background-color: #ddd;
-	}
-
-	nav a.dull { color: #888; }
-	nav a.dull:hover {
-		color: #888;
-		background-color: inherit;
-	}
-
-	nav li h2, nav li div {
-		color: #222;
-	}
-	nav li h2 {
-		color: #ddd;
-	}
-	nav li div {
-		background-color: #ddd;
-	}
-
-	nav li h2:after {
-		border-bottom: 0.35rem solid #ddd;
-	}
-}
-
-@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
-	html, body, main {
-		color: #fff;
-		background-color: #000;
-	}
-
-	nav a:hover {
-		color: #000;
-		background-color: #fff;
-	}
-
-	nav a.dull { color: #888; }
-	nav a.dull:hover {
-		color: #888;
-		background-color: inherit;
-	}
-
-	nav li h2, nav li div {
-		color: #000;
-	}
-	nav li h2 {
-		color: #fff;
-	}
-	nav li div {
-		background-color: #fff;
-	}
-
-	nav li h2:after {
-		border-bottom: 0.35rem solid #fff;
-	}
 }
