@@ -148,6 +148,38 @@ nav li:hover h2 {
 	padding: 0.3rem;
 }
 
+@media print, (prefers-contrast: more) {
+	html, body, main {
+		color: #fff;
+		background-color: #000;
+	}
+
+	nav a:hover {
+		color: #fff;
+		background-color: #000;
+	}
+
+	nav a.dull { color: #888; }
+	nav a.dull:hover {
+		color: #888;
+		background-color: inherit;
+	}
+
+	nav li h2, nav li div {
+		color: #fff;
+	}
+	nav li h2 {
+		color: #000;
+	}
+	nav li div {
+		background-color: #000;
+	}
+
+	nav li h2:after {
+		border-bottom: 0.35rem solid #000;
+	}
+}
+
 @media (prefers-color-scheme: dark) {
 	html, body, main {
 		color: #ddd;
