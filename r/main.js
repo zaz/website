@@ -1,17 +1,11 @@
-(function() {
-  var de_obfuscate;
+const de_obfuscate = (_, email) =>
+	email.replace("...", "@").replace(/\.\.\./g, ".")
 
-  de_obfuscate = function(_, email) {
-    return email.replace("...", "@").replace(/\.\.\./g, ".");
-  };
-
-  $(document).ready(function() {
-    return $(".eml").each(function() {
-      $(this).html(de_obfuscate);
-      if ($(this).attr("href")) {
-        return $(this).attr("href", de_obfuscate);
-      }
-    });
-  });
-
-}).call(this);
+$(document).ready( () =>
+	$(".eml").each(function() {
+		$(this).html(de_obfuscate)
+		if ($(this).attr("href")) {
+			return $(this).attr("href", de_obfuscate)
+		}
+	})
+)
