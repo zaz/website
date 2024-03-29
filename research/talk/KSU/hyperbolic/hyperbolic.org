@@ -1,0 +1,109 @@
+#+options: timestamp:nil toc:1 num:nil
+#+reveal_theme: serif
+#+bibliography: ../../../../cite/cs.bib
+#+title: Hyperbolic Geometry
+
+* Introduction
+
+[[./img/hyperbolic euclidean elliptical.png]]
+
+** Riddle
+
+A person is standing somewhere on Earth.
+
+They walk 10km S, 10km E, 10km N.
+
+They are back where they started.
+
+Where are they?
+
+* Videos
+
+** 1
+@@html:<iframe width="1280" height="720" src="https://www.youtube.com/embed/yqUv2JO2BCs?start=90&mute=1&autoplay=1" title="Portals to Non-Euclidean Geometries" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: fixed; top: 0; left: 0; height:100%; width:100%"></iframe>@@
+
+** 2
+@@html:<iframe width="1280" height="720" src="https://www.youtube.com/embed/AGOXpy_f70Y?start=202&mute=1&autoplay=1" title="This Game Breaks All Perceptions of Reality as we Know It" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: fixed; top: 0; left: 0; height:100%; width:100%"></iframe>@@
+
+* Properties
+
+** Exponential
+
+$\text{circumference} \propto e^\text{radius}$
+
+$\text{area} \propto e^\text{radius}$
+
+$\Downarrow$
+
+$\text{circumference} \propto \text{area}$
+
+** Area of a Triangle
+
+\begin{align*}
+\left(A + B + C - \pi\right) R^2 \tag{spherical} \\
+-\left(A + B + C - \pi\right) R^2 \tag{hyperbolic}
+\end{align*}
+
+*Does not depend on distance!* Only on the 3 angles and the curvature of the space.
+
+** Gyrovector space
+
+Vectors rotate when you translate them.
+
+$\text{NE} \neq \text{EN}$
+
+$\Downarrow$
+
+Coordinates are very expensive relative to radius.
+
+* Special Relativity
+
+Velocities are points in
+
+$$\mathbf{H}^3$$
+
+Curvature is $c$.
+
+** Consequence
+
+No need for "boosts", Lorentz transforms, etc.
+
+Relative velocity (*without hyperbolic geometry:*):
+
+$$
+\mathbf{v}_{1-2} = \frac{\sqrt{(\mathbf{v_1}-\mathbf{v_2})^2 - (\mathbf{v_1} \times \mathbf{v_2})^2}}{1 - \mathbf{v_1}\cdot\mathbf{v_2}}
+$$
+
+Relative rapidity (*with hyperbolic geometry:*):
+
+$$
+\boldsymbol{\psi}_{1-2} = \boldsymbol{\psi}_1 - \boldsymbol{\psi}_2
+$$
+
+** Octagonal grid
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/H2-8-3-dual_blue_on_red.svg]]
+
+** Octagonal grid
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+
+[[./img/H2-8-3-dual.svg]]
+
+
+* CS Applications
+
+**Hierarchical data**
+
+Concept spaces.
+
+**Routing**
+
+Every connected, finite graph has a greedy embedding in the hyperbolic plane. [cite:@HyperbolicRouting]
+
+* References
+#+print_bibliography:

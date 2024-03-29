@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>GOAFR</title>
+<meta name="author" content=""/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/serif.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">GOAFR</h1><p class="subtitle">Geographic Routing Using Ellipses</p>
+
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-orgff67cee">Fun Fact</a></li>
+<li><a href="#/slide-orgc03a67b">Definitions</a></li>
+<li><a href="#/slide-org5450826">Geographic Routing</a></li>
+<li><a href="#/slide-org84c246e">Main Result</a></li>
+<li><a href="#/slide-org7518b51">Simulations</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section>
+<section id="slide-orgff67cee">
+<h2 id="orgff67cee">Fun Fact</h2>
+<p>
+<b>Area of a Triangle</b>
+</p>
+
+<div>
+\begin{align*}
+\left(A + B + C - \pi\right) R^2 \tag{spherical} \\
+-\left(A + B + C - \pi\right) R^2 \tag{hyperbolic}
+\end{align*}
+
+</div>
+
+<p>
+<b>Does not depend on distance!</b> Only on the 3 angles and the curvature of the space.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgc03a67b">
+<h2 id="orgc03a67b">Definitions</h2>
+<p>
+\(d(a,b)\): distance between \(a\) and \(b\) <br />
+UDG: Graph: \(a\) and \(b\) are neighbors iff \(d(a,b) \leq 1\) <br />
+\(c(e)\): cost of sending a message over edge \(e\):
+</p>
+
+<ul>
+<li>hop metric: \(c(e) := 1\)</li>
+<li>Euclidean metric: \(c(e) := |e|\)</li>
+<li>energy metric: \(c(e) := |e|^2\)</li>
+
+</ul>
+
+<p>
+All metrics polynomial in \(|e|\) have the same asymptotic message complexity.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org5450826">
+<h2 id="org5450826">Geographic Routing</h2>
+<p>
+Route from \(s\) to \(t\)
+</p>
+
+<ul>
+<li>\(s\) knows coordinates of \(t\)</li>
+<li>nodes know their neighbors&rsquo; coordinates</li>
+<li>nodes <b>do not know</b> the entire network structure</li>
+
+</ul>
+</section>
+<section id="slide-org15d06ee">
+<h3 id="org15d06ee">Solutions</h3>
+<ul>
+<li>Route to neighbor closest to \(t\) - does not always work</li>
+<li>Route to neighbor closest angle to \(t\) - does not always work</li>
+<li>Route around faces - not efficient</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org84c246e">
+<h2 id="org84c246e">Main Result</h2>
+<p>
+GOAFR: Greedy + A bounding ellipse + OFR
+</p>
+
+<ul>
+<li><a href="#/slide-org1f6bdf3">Worst-case optimal</a>: \(O(\overline{st}^2)\)</li>
+<li><a href="#/slide-org7518b51">practically efficient</a></li>
+
+</ul>
+</section>
+<section id="slide-orgb268a6e">
+<h3 id="orgb268a6e">FR vs OFR</h3>
+
+<div id="org1fedf25" class="figure">
+<p><img src="./img/FR-OFR.svg" alt="FR-OFR.svg" class="org-svg" width="80%" />
+</p>
+</div>
+</section>
+<section id="slide-orge819c4a">
+<h3 id="orge819c4a">GOFR</h3>
+<p>
+Greedy + OFR
+</p>
+
+
+<div id="org0bbd4ea" class="figure">
+<p><img src="./img/GOFR.svg" alt="GOFR.svg" class="org-svg" width="70%" />
+</p>
+</div>
+</section>
+<section id="slide-org1f6bdf3">
+<h3 id="org1f6bdf3">Worst-case optimal</h3>
+<p>
+\(O(\overline{st}^2)\)
+</p>
+
+
+<div id="org5105fce" class="figure">
+<p><img src="./img/GOAFR-suboptimality.svg" alt="GOAFR-suboptimality.svg" class="org-svg" width="80%" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org7518b51">
+<h2 id="org7518b51">Simulations</h2>
+<p>
+\( \text{path span} = \frac{\text{shortest path(s, t)}}{d(s,t)} \)
+</p>
+
+
+<div id="org39ec1a5" class="figure">
+<p><img src="./img/path-span-network-density.svg" alt="path-span-network-density.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-org0cac839">
+<h3 id="org0cac839">Critically dense network</h3>
+
+<div id="orgc1e32d6" class="figure">
+<p><img src="./img/critically-dense-network.svg" alt="critically-dense-network.svg" class="org-svg" width="80%" />
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>

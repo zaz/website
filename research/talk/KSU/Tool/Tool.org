@@ -1,0 +1,49 @@
+#+options: timestamp:nil toc:1 num:nil
+#+reveal_theme: serif
+#+bibliography: ../../../../cite/cs.bib
+#+title: Tool
+#+subtitle: An Efficient and Flexible Simulator for Byzantine Fault-Tolerant Protocols
+
+* Summary
+Tool [cite:@ToolNetworkSimulator] is an abstract network simulator for BFT protocols.
+
+More specific than Quantas: only BFT algorithms.
+
+* Tool vs Quantas
+
+|                       | Quantas           | Tool                             |
+|-----------------------+-------------------+----------------------------------|
+| *Scope*               | All networks      | BFT algorithms                   |
+| *Functionality*       | Benchmarking      | Benchmarking, testing, verifying |
+| *Metric*              | Number of rounds  | Time usage & message usage       |
+| *Byzantine behaviors* | Under development | Implemented                      |
+| *Language*            | C++               | JavaScript                       |
+
+** Byzantine Behavior
+- In Quantas, attacks modify peers.
+- In Tool, attacks modify messages between peers.
+  - *Rushing* attacks
+  - Network partition attacks
+
+* [[https://github.com/csienslab/BFT-Simulator/][Code]]
+- Written in JavaScript
+- No activity
+- Visualization with Python
+
+* Visualization
+[[./bar chart.png]]
+
+** Heatmap
+[[./heatmap.png]]
+Each node’s view during HotStuff+NS execution $(λ = 150; N = (250, 50))$. *Each color represents a view number.*
+
+* Twins
+[cite:@TwinsByzantineBehaviorGenerator]
+
+Automatic generator for Byzantine behaviors:
+- Equivocation
+- Double voting
+- Losing internal state
+
+* References
+#+print_bibliography:

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>ICCs &sim; ECCs</title>
+<meta name="author" content=""/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/serif.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">ICCs &sim; ECCs</h1><p class="subtitle">There is a 1:1 correspondence between Interactive Consensus conditions and Error-Correcting Codes.</p>
+
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-orgbfe7752">Riddle</a></li>
+<li><a href="#/slide-orge7441be">Background</a></li>
+<li><a href="#/slide-org034f862">Prerequisites</a></li>
+<li><a href="#/slide-org8924093">Main Results</a></li>
+<li><a href="#/slide-org2769f14">Technical details</a></li>
+<li><a href="#/slide-orgc8f6533">References</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section>
+<section id="slide-orgbfe7752">
+<h2 id="orgbfe7752">Riddle</h2>
+<p>
+You have 27 coins, 1 of which is a different weight. Using a balance scale with 2 pans, how can you determine which coin is different in only 4 weighings?
+</p>
+
+<p>
+Generalize this to N coins.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orge7441be">
+<h2 id="orge7441be">Background</h2>
+<p>
+Asynchronous consensus is impossible (<a href="#citeproc_bib_item_1">Fischer, Lynch, and Paterson 1983</a>)
+</p>
+
+<p>
+3 circumventions:
+</p>
+
+<ol>
+<li>weaken: approximate agreement, set agreement, randomized solutions</li>
+<li>strengthen synchrony: partially synchronous, failure detectors</li>
+<li><p>
+<b>condition-based approach:</b> place restrictions on the input to processes
+</p>
+
+<aside class="notes">
+<p>
+3 will be the focus of this paper
+</p>
+
+</aside></li>
+
+</ol>
+</section>
+<section id="slide-orgf5f9160">
+<h3 id="orgf5f9160">Condition-based approach</h3>
+<p>
+Assume a likely case:
+</p>
+
+<ul>
+<li>Fast termination in likely case</li>
+
+<li>Still safe in unlikely case</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org034f862">
+<h2 id="org034f862">Prerequisites</h2>
+<div class="outline-text-2" id="text-org034f862">
+</div>
+</section>
+<section id="slide-orga5de673">
+<h3 id="orga5de673">Hamming distance</h3>
+<p>
+Number of symbols that differ:
+</p>
+
+<div>
+\begin{align*}
+[\ {\color{red}{0\  1\  0}}\  0\  1\ ] \\
+[\ {\color{red}{1\  0\  1}}\  0\  1\ ] \\
+\end{align*}
+
+</div>
+
+<p>
+The above two words have a Hamming distance of 3.
+</p>
+</section>
+<section id="slide-orga59ca3b">
+<h3 id="orga59ca3b">Hamming distance <i>is</i> a distance</h3>
+<p>
+Place every possible word in a binary hypercube:
+<img src="./img/binary cube.svg" alt="binary cube.svg" class="org-svg" />
+</p>
+
+<p>
+\(\ell_1\) distance is the Hamming distance
+</p>
+</section>
+<section id="slide-org1b0c5fd">
+<h3 id="org1b0c5fd">Coding</h3>
+<p>
+Naively send message 3×
+</p>
+
+<p>
+<b>or</b> <a href="https://en.wikipedia.org/wiki/Polynomial_code">cleverly pick code words</a>:
+</p>
+
+<div>
+\begin{align*}
+00000\quad 00111\quad 01110\quad 01001 \\
+11100\quad 11011\quad 10010\quad 10101
+\end{align*}
+
+</div>
+
+<p>
+Hamming distance \( \geq 2 \).
+</p>
+
+<p>
+8 code words \( \implies \) 3 bits of information sent
+</p>
+
+<aside class="notes">
+<p>
+The above codewords were generated using polynomial division on a binary field or, if you&rsquo;re trying to impress the ladies, a binary Galois field.
+</p>
+
+<p>
+How codewords are generated is a little complicated, but using the codewords is very simple.
+</p>
+
+</aside>
+</section>
+<section id="slide-org6f9cdd9">
+<h3 id="org6f9cdd9">Coding theory</h3>
+<p>
+A code \(C\) is \( (f_v, f_c) \)-error/erasure decoding iff its minimal hamming distance is \( > 2f_v + f_c \)
+</p>
+
+<p>
+The original, Hamming(7,4), had a minimal hamming distance of 3:
+</p>
+
+
+<div id="org4988dd3" class="figure">
+<p><img src="./img/Hamming(7,4).svg" alt="Hamming(7,4).svg" class="org-svg" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org8924093">
+<h2 id="org8924093">Main Results</h2>
+<div class="outline-text-2" id="text-org8924093">
+</div>
+</section>
+<section id="slide-orgca3682f">
+<h3 id="orgca3682f">General Idea</h3>
+
+<div id="orgd30f7ec" class="figure">
+<p><img src="./img/ICCs-ECCs-fig1-fig2.png" alt="ICCs-ECCs-fig1-fig2.png" />
+</p>
+</div>
+</section>
+<section id="slide-org2db4e51">
+<h3 id="org2db4e51"><b>1.</b> ICCs &sim; ECCs</h3>
+<p>
+{conditions that allow IC to be solved despite \(f_c\) crashes and \(f_e\) value domain faults}
+</p>
+
+<p>
+\(\wr\)
+</p>
+
+<p>
+{ECCs capable of recovering from \(f_c\) erasures and \(f_e\) corruptions}
+</p>
+
+<aside class="notes">
+<p>
+1:1 correspondence between interactive consensus conditions and ECCs
+</p>
+
+</aside>
+</section>
+<section id="slide-org41da724">
+<h3 id="org41da724"><b>2.</b></h3>
+<p>
+[ \( C \) \( \implies \) consensus despite \(f_c\) crashes ]
+</p>
+
+<p>
+\( \Updownarrow \)
+</p>
+
+<p>
+\(C\)&rsquo;s <a href="https://en.wikipedia.org/wiki/Hamming_distance">Hamming distance</a> is \(f_c+1\)
+</p>
+
+<p>
+<br />
+</p>
+
+<p>
+[ \( C \) \( \implies \) consensus despite \(f_b\) Byzantine faults ]
+</p>
+
+<p>
+\( \Updownarrow \)
+</p>
+
+<p>
+\(C\)&rsquo;s Hamming distance is \(2f_b+1\)
+</p>
+
+<aside class="notes">
+<p>
+C = condition = ECC
+TODO what is the additional validity property
+</p>
+
+</aside>
+</section>
+<section id="slide-org71d1876">
+<h3 id="org71d1876">Implications</h3>
+<p>
+Requirements that make an ECC valid &sim; conditions needed to solve IC
+</p>
+
+<p>
+FLP \( \implies \) no perfect codes can tolerate erasure failures
+</p>
+
+<aside class="notes">
+<p>
+rich field of ECCs &rarr; Byzantine
+Byzantine, e.g. FLP (asynchronous consensus is impossible) → ECCs
+</p>
+
+</aside>
+</section>
+<section id="slide-org8ccb26f">
+<h3 id="org8ccb26f">Main Implication</h3>
+<p>
+agreement problem &amp; conditions
+</p>
+
+<p>
+\( \downarrow \)
+</p>
+
+<p>
+algorithm to solve problem
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org2769f14">
+<h2 id="org2769f14">Technical details</h2>
+<p>
+Form a graph of input vectors, \( G_{f_c,f_v}^C\):
+</p>
+<ul>
+<li>Vertices are included iff they meet conditions</li>
+<li>Vertices are neighbors iff their Hamming distance \(\leq 2f_v + f_c\)</li>
+
+</ul>
+
+<p>
+<b>Definition 3.1 &amp; Theorem 3.4:</b> An agreement problem \( (C, f_c,f_v)\) can be solved iff \( \exists h : \) h is constant on every connected component of \( G_{f_c,f_v}^C \)
+</p>
+
+<p>
+<i>See 2.1 and 3. \(d(a, b)\) is the Hamming distance between \( a \) and \( b \). \( C \) are the conditions: The set of assumed possible input vectors.</i>
+</p>
+</section>
+<section id="slide-org38a1aca">
+<h3 id="org38a1aca">Code</h3>
+
+<div id="org9beecfb" class="figure">
+<p><img src="./img/code.png" alt="code.png" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgc8f6533">
+<h2 id="orgc8f6533">References</h2>
+<style>.csl-entry{text-indent: -1.5em; margin-left: 1.5em;}</style><div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Fischer, Michael J., Nancy A. Lynch, and Michael S. Paterson. 1983. “Impossibility of Distributed Consensus with One Faulty Process.” <i>Proceedings of the 2nd Acm Sigact-Sigmod Symposium on Principles of Database Systems - Pods ’83</i>. <a href="https://doi.org/10.1145/588058.588060">https://doi.org/10.1145/588058.588060</a>.</div>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>The Lawn Mowing Problem</title>
+<meta name="author" content=""/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/serif.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">The Lawn Mowing Problem</h1><p class="subtitle">From Algebra to Algorithms</p>
+
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-orgc653828">Summary</a></li>
+<li><a href="#/slide-orgce7bd97">Prerequisites</a></li>
+<li><a href="#/slide-orgce781aa">Efficient covering of polyminoes</a></li>
+<li><a href="#/slide-orgcada1ac">Conclusion</a></li>
+<li><a href="#/slide-org6eb1678">References</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<section id="slide-orgc653828">
+<h2 id="orgc653828">Summary</h2>
+<p>
+(<a href="#citeproc_bib_item_1">Fekete et al. 2023</a>)
+</p>
+
+<p>
+Continuous generalization of the traveling salesman problem (TSP).
+</p>
+
+<p>
+Tour starts and ends at the same point, covers every point.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgce7bd97">
+<h2 id="orgce7bd97">Prerequisites</h2>
+<ul>
+<li>Galois groups</li>
+<li>Abelian property</li>
+<li>Polyminoes</li>
+<li>Minkowski sums</li>
+
+</ul>
+
+</section>
+<section id="slide-orge8702c1">
+<h3 id="orge8702c1">Galois groups</h3>
+<p>
+<b>Polynomials are solvable by radicals iff they have enough symmetry.</b>
+</p>
+
+<p>
+<b>i.e. iff their Galois group is abelian (commutative)</b>
+</p>
+
+<p>
+Polynomials of order &lt; 5 are algebraically <b>easy</b>
+</p>
+<ul>
+<li>Can be solved by radicals</li>
+
+</ul>
+<p>
+\( \frac{-b \pm \sqrt{b^2-4ac}}{2a} \)
+</p>
+
+<p>
+Most polynomials of order ≥ 5 are algebraically <b>hard</b>
+</p>
+<ul>
+<li>Cannot be solved by radicals</li>
+
+</ul>
+
+</section>
+<section id="slide-org097fcb1">
+<h3 id="org097fcb1">Polyminoes</h3>
+<p>
+Generalized dominoes.
+</p>
+
+
+<div id="org7951961" class="figure">
+<p><img src="./img/all_35_free_hexominoes.svg" alt="all_35_free_hexominoes.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+Shapes made up of pixels.
+</p>
+
+</section>
+<section id="slide-org1cfd839">
+<h3 id="org1cfd839">Minkowski sums</h3>
+<p>
+\(
+{\color{red} R} = {\color{green} G} \bigoplus {\color{blue} B} = \{ \mathbf g + \mathbf b\ |\ \mathbf g \in {\color{green} G},\ \mathbf b \in {\color{blue} B} \}
+\)
+</p>
+
+
+<div id="orged7d988" class="figure">
+<p><img src="./img/Minkowski sum.svg" alt="Minkowski sum.svg" class="org-svg" />
+</p>
+</div>
+
+</section>
+<section id="slide-org41a01e7">
+<h3 id="org41a01e7">Real world</h3>
+
+<div id="org936f385" class="figure">
+<p><img src="./img/Minkowski-sum-of-a-polygon-with-a-disk.png" alt="Minkowski-sum-of-a-polygon-with-a-disk.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgce781aa">
+<h2 id="orgce781aa">Efficient covering of polyminoes</h2>
+
+<div id="org8fb85f9" class="figure">
+<p><img src="./img/different kinds of TSPs.svg" alt="different kinds of TSPs.svg" class="org-svg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orga6636ec">
+<h3 id="orga6636ec">Efficient covering of pixels</h3>
+
+<div id="orge673821" class="figure">
+<p><img src="./img/pixel coverings.svg" alt="pixel coverings.svg" class="org-svg" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgc0b36af">
+<h3 id="orgc0b36af">Traveling Salesperson</h3>
+<p>
+Problem is now reduced to the traveling salesperson problem. <b>Solution:</b>
+</p>
+
+<ul>
+<li>Integer Programming (IP)</li>
+<li>Large Neighborhood Search (LNS)</li>
+
+</ul>
+
+</section>
+<section id="slide-org4263e7e">
+<h3 id="org4263e7e">Lower &amp; Upper Bounds</h3>
+
+<div id="orgef94510" class="figure">
+<p><img src="./img/bounds comparison.svg" alt="bounds comparison.svg" class="org-svg" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgcada1ac">
+<h2 id="orgcada1ac">Conclusion</h2>
+<p>
+<b>Already proven:</b>
+</p>
+
+<ul>
+<li>the optimal tour of a polygon is polygonal itself</li>
+
+</ul>
+
+<p>
+<b>Proven in this paper</b>
+</p>
+
+<ul>
+<li>the coordinates are algebraically hard</li>
+
+</ul>
+
+<p>
+<b>Future research:</b>
+</p>
+
+<ul>
+<li>Better lower bounds</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org6eb1678">
+<h2 id="org6eb1678">References</h2>
+<style>.csl-entry{text-indent: -1.5em; margin-left: 1.5em;}</style><div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Fekete, Sándor P., Dominik Krupke, Michael Perk, Christian Rieck, and Christian Scheffer. 2023. “The Lawn Mowing Problem: From Algebra to Algorithms.” 2023.</div>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>

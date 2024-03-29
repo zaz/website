@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg height="512" width="512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<style type="text/css">
+		<![CDATA[
+			.site{fill:#000;}
+			.edge{stroke:#000;stroke-width:2px;}
+			.circle{stroke:#aaa;stroke-width:2px;fill:none;}
+			]]>
+	</style>
+	<g class="site">
+		<circle cx="85" cy="415" r="5"/>
+		<circle cx="391" cy="357" r="5"/>
+		<circle cx="265" cy="415" r="5"/>
+		<circle cx="417" cy="229" r="5"/>
+		<circle cx="417" cy="77" r="5"/>
+		<circle cx="286" cy="228" r="5"/>
+		<circle cx="211" cy="330" r="5"/>
+		<circle cx="60" cy="255" r="5"/>
+		<circle cx="162" cy="51" r="5"/>
+		<circle cx="340" cy="101" r="5"/>
+	</g>
+</svg>

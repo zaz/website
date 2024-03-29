@@ -1,0 +1,82 @@
+#+reveal_theme: serif
+#+options: timestamp:nil toc:1 num:nil
+#+bibliography: ../../../../cite/cs.bib
+#+title: Hybrid Communication Networks
+#+subtitle: The Return of the Polyminoes
+
+* Summary
+[cite:@HybridComm]
+
+Combine 5G and ad-hoc wireless.
+
+Goal:
+
+- Correct
+- Efficient
+- Compact
+
+#+BEGIN_NOTES
+  Efficient: low path-stretch, high throughput
+
+  Compact: nodes hold only local routing data
+#+END_NOTES
+
+* Prerequisites
+
+- *UDG*: Unit-disk graph: nodes connected $\iff$ distance \leq 1
+- *radio hole*: UDG has an internal cycle that cannot be triangulated
+- *Delaunay triangulation*
+
+** Delaunay triangulation
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+[[./img/Delaunay_points.svg]]
+
+** Delaunay triangulation
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+[[./img/Delaunay_circumcircles_vectorial.svg]]
+
+** Delaunay triangulation
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+[[./img/Delaunay_circumcircles_centers.svg]]
+
+** Delaunay triangulation
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+[[./img/Delaunay_Voronoi.svg]]
+
+** Dual graph
+
+#+attr_html: :height 512px
+[[./img/dual_cube-octahedron.svg]]
+
+* Assumptions
+
+- UDG, no radio holes $\implies$ triangularizable
+#+BEGIN_NOTES
+  Triangular graphs - most perfect
+#+END_NOTES
+
+* Grid graph
+
+Analogous to polyminoes. Can be created locally.
+
+[[./img/grid_graph.svg]]
+
+** Routing using the "portal tree"
+[[./img/portal_tree.svg]]
+
+* Proven
+
+- 1.2.  Impossible to set up compact routing with constant stretch in $o(\sqrt n)$ time
+  - *Unless* you use a hybrid network, then it can be done in $O(\log n)$
+
+- 5. You can find shortest paths in the grid-graph
+
+- 3.1.  Shortest paths in the grid-graph approximate shortest paths in the UDG

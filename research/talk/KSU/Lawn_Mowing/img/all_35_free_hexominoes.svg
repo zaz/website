@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The 35 free hexominoes (8-ominoes) R. A. Nonenmacher  12-Sep-2008 -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version     = "1.1"
+     id          = "Hexominoes"
+     baseProfile = "full"
+     xmlns       = "http://www.w3.org/2000/svg"
+     xmlns:xlink = "http://www.w3.org/1999/xlink"
+     xmlns:ev    = "http://www.w3.org/2001/xml-events"
+     width       = "360"
+     height      = "370">
+<defs>
+   <style type="text/css"> <![CDATA[
+      path { fill         : none;
+             stroke       : #000;
+             stroke-width : 0.15px }
+      .s { fill : #CAC }
+      .t { fill : #AAA }
+      .u { fill : #D99 }
+      .v { fill : #ADA }
+      .w { fill : #AAD } ]]>
+   </style>
+   <rect id="S" width="1" height="1" stroke="#000" stroke-width="0.02"/>
+   <g id="s1"><use xlink:href="#S"/></g>
+   <g id="s2"><use xlink:href="#S"/><use xlink:href="#s1" y="1"/></g>
+   <g id="s3"><use xlink:href="#S"/><use xlink:href="#s2" y="1"/></g>
+   <g id="s4"><use xlink:href="#S"/><use xlink:href="#s3" y="1"/></g>
+   <g id="s5"><use xlink:href="#S"/><use xlink:href="#s4" y="1"/></g>
+   <g id="s6"><use xlink:href="#S"/><use xlink:href="#s5" y="1"/></g>
+   <g id="H1" class="s"><use xlink:href="#s6" y="0"/><path d="M0,0h1v6h-1z"/></g>
+   <g id="H2" class="t"><use xlink:href="#s5" y="1"/><use xlink:href="#s1" x="1" y="1"/><path d="M0,1h2v1h-1v4h-1z"/></g>
+   <g id="H3" class="t"><use xlink:href="#s5" y="1"/><use xlink:href="#s1" x="1" y="2"/><path d="M0,1h1v1h1v1h-1v3h-1z"/></g>
+   <g id="H4" class="u"><use xlink:href="#s5" y="1"/><use xlink:href="#s1" x="1" y="3"/><path d="M0,1h1v2h1v1h-1v2h-1z"/></g>
+   <g id="H5" class="t"><use xlink:href="#s4" y="2"/><use xlink:href="#s2" x="1" y="1"/><path d="M0,2h1v-1h1v2h-1v3h-1z"/></g>
+   <g id="H6" class="t"><use xlink:href="#s4" y="2"/><use xlink:href="#s2" x="1" y="2"/><path d="M0,2h2v2h-1v2h-1z"/></g>
+   <g id="H7" class="t"><use xlink:href="#s4" y="2"/><use xlink:href="#s1" x="1" y="2"/><use xlink:href="#s1" x="1" y="4"/><path d="M0,2h2v1h-1v1h1v1h-1v1h-1z"/></g>
+   <g id="H8" class="u"><use xlink:href="#s4" y="2"/><use xlink:href="#s1" x="1" y="2"/><use xlink:href="#s1" x="1" y="5"/><path d="M0,2h2v1h-1v2h1v1h-2z"/></g>
+   <g id="H9" class="u"><use xlink:href="#s4" y="2"/><use xlink:href="#s2" x="1" y="3"/><path d="M0,2h1v1h1v2h-1v1h-1z"/></g>
+   <g id="H10" class="t"><use xlink:href="#s4" y="2"/><use xlink:href="#s1" x="1" y="2"/><use xlink:href="#s1" x="2" y="2"/><path d="M0,2h3v1h-2v3h-1z"/></g>
+   <g id="H11" class="t"><use xlink:href="#s4" y="2"/><use xlink:href="#s1" x="1" y="3"/><use xlink:href="#s1" x="2" y="3"/><path d="M0,2h1v1h2v1h-2v2h-1z"/></g>
+   <g id="H12" class="u"><use xlink:href="#s1" y="2"/><use xlink:href="#s4" x="1" y="2"/><use xlink:href="#s1" x="2" y="2"/><path d="M0,2h3v1h-1v3h-1v-3h-1z"/></g>
+   <g id="H13" class="t"><use xlink:href="#s1" y="3"/><use xlink:href="#s4" x="1" y="2"/><use xlink:href="#s1" x="2" y="2"/><path d="M0,3h1v-1h2v1h-1v3h-1v-2h-1z"/></g>
+   <g id="H14" class="t"><use xlink:href="#s1" y="4"/><use xlink:href="#s4" x="1" y="2"/><use xlink:href="#s1" x="2" y="2"/><path d="M0,4h1v-2h2v1h-1v3h-1v-1h-1z"/></g>
+   <g id="H15" class="w"><use xlink:href="#s1" y="5"/><use xlink:href="#s4" x="1" y="2"/><use xlink:href="#s1" x="2" y="2"/><path d="M0,5h1v-3h2v1h-1v3h-2z"/></g>
+   <g id="H16" class="w"><use xlink:href="#s1" y="4"/><use xlink:href="#s4" x="1" y="2"/><use xlink:href="#s1" x="2" y="3"/><path d="M0,4h1v-2h1v1h1v1h-1v2h-1v-1h-1z"/></g>
+   <g id="H17" class="u"><use xlink:href="#s1" y="3"/><use xlink:href="#s4" x="1" y="2"/><use xlink:href="#s1" x="2" y="3"/><path d="M0,3h1v-1h1v1h1v1h-1v2h-1v-2h-1z"/></g>
+   <g id="H18" class="t"><use xlink:href="#s3" y="3"/><use xlink:href="#s2" x="1" y="2"/><use xlink:href="#s1" x="2" y="3"/><path d="M0,3h1v-1h1v1h1v1h-2v2h-1z"/></g>
+   <g id="H19" class="t"><use xlink:href="#s3" y="3"/><use xlink:href="#s2" x="1" y="2"/><use xlink:href="#s1" x="1" y="5"/><path d="M0,3h1v-1h1v2h-1v1h1v1h-2z"/></g>
+   <g id="H20" class="w"><use xlink:href="#s3" y="3"/><use xlink:href="#s3" x="1" y="1"/><path d="M0,3h1v-2h1v3h-1v2h-1z"/></g>
+   <g id="H21" class="w"><use xlink:href="#s3" y="3"/><use xlink:href="#s3" x="1" y="2"/><path d="M0,3h1v-1h1v3h-1v1h-1z"/></g>
+
+   <g id="H22" class="s"><use xlink:href="#s3" y="3"/><use xlink:href="#s3" x="1" y="3"/><path d="M0,3h2v3h-2z"/></g>
+   <g id="H23" class="t"><use xlink:href="#s1" y="3"/><use xlink:href="#s3" x="1" y="3"/><use xlink:href="#s2" x="2" y="2"/><path d="M0,3h2v-1h1v2h-1v2h-1v-2h-1z"/></g>
+   <g id="H24" class="t"><use xlink:href="#s1" y="3"/><use xlink:href="#s3" x="1" y="3"/><use xlink:href="#s2" x="2" y="3"/><path d="M0,3h3v2h-1v1h-1v-2h-1z"/></g>
+   <g id="H25" class="t"><use xlink:href="#s1" y="4"/><use xlink:href="#s3" x="1" y="3"/><use xlink:href="#s2" x="2" y="2"/><path d="M0,4h1v-1h1v-1h1v2h-1v2h-1v-1h-1z"/></g>
+   <g id="H26" class="t"><use xlink:href="#s3" y="3"/><use xlink:href="#s1" x="1" y="3"/><use xlink:href="#s2" x="2" y="2"/><path d="M0,3h2v-1h1v2h-2v2h-1z"/></g>
+   <g id="H27" class="t"><use xlink:href="#s3" y="3"/><use xlink:href="#s2" x="1" y="2"/><use xlink:href="#s1" x="2" y="2"/><path d="M0,3h1v-1h2v1h-1v1h-1v2h-1z"/></g>
+   <g id="H28" class="t"><use xlink:href="#s3" y="3"/><use xlink:href="#s1" x="1" y="3"/><use xlink:href="#s2" x="2" y="3"/><path d="M0,3h3v2h-1v-1h-1v2h-1z"/></g>
+   <g id="H29" class="t"><use xlink:href="#s3" y="3"/><use xlink:href="#s1" x="1" y="4"/><use xlink:href="#s2" x="2" y="3"/><path d="M0,3h1v1h1v-1h1v2h-2v1h-1z"/></g>
+   <g id="H30" class="u"><use xlink:href="#s2" y="3"/><use xlink:href="#s2" x="1" y="4"/><use xlink:href="#s2" x="2" y="3"/><path d="M0,3h1v1h1v-1h1v2h-1v1h-1v-1h-1z"/></g>
+   <g id="H31" class="t"><use xlink:href="#s2" y="4"/><use xlink:href="#s3" x="1" y="2"/><use xlink:href="#s1" x="2" y="2"/><path d="M0,4h1v-2h2v1h-1v2h-1v1h-1z"/></g>
+   <g id="H32" class="v"><use xlink:href="#s3" y="3"/><use xlink:href="#s2" x="1" y="4"/><use xlink:href="#s1" x="2" y="5"/><path d="M0,3h1v1h1v1h1v1h-3z"/></g>
+   <g id="H33" class="v"><use xlink:href="#s2" y="4"/><use xlink:href="#s3" x="1" y="3"/><use xlink:href="#s1" x="2" y="4"/><path d="M0,4h1v-1h1v1h1v1h-1v1h-2z"/></g>
+   <g id="H34" class="t"><use xlink:href="#s2" y="4"/><use xlink:href="#s2" x="1" y="4"/><use xlink:href="#s2" x="2" y="3"/><path d="M0,4h2v-1h1v2h-1v1h-2z"/></g>
+   <g id="H35" class="w"><use xlink:href="#s2" y="4"/><use xlink:href="#s2" x="1" y="3"/><use xlink:href="#s2" x="2" y="2"/><path d="M0,4h1v-1h1v-1h1v2h-1v1h-1v1h-1z"/></g>
+</defs>
+<use xlink:href="#H1" transform="translate(10,10) scale(13)"/>
+<use xlink:href="#H2" transform="translate(60,10) scale(13)"/>
+<use xlink:href="#H3" transform="translate(110,10) scale(13)"/>
+<use xlink:href="#H4" transform="translate(160,10) scale(13)"/>
+<use xlink:href="#H5" transform="translate(210,10) scale(13)"/>
+<use xlink:href="#H6" transform="translate(260,10) scale(13)"/>
+<use xlink:href="#H7" transform="translate(310,10) scale(13)"/>
+<use xlink:href="#H8" transform="translate(10,75) scale(13)"/>
+<use xlink:href="#H9" transform="translate(60,75) scale(13)"/>
+<use xlink:href="#H10" transform="translate(110,75) scale(13)"/>
+<use xlink:href="#H11" transform="translate(160,75) scale(13)"/>
+<use xlink:href="#H12" transform="translate(210,75) scale(13)"/>
+<use xlink:href="#H13" transform="translate(260,75) scale(13)"/>
+<use xlink:href="#H14" transform="translate(310,75) scale(13)"/>
+<use xlink:href="#H15" transform="translate(10,150) scale(13)"/>
+<use xlink:href="#H16" transform="translate(60,150) scale(13)"/>
+<use xlink:href="#H17" transform="translate(110,150) scale(13)"/>
+<use xlink:href="#H18" transform="translate(160,150) scale(13)"/>
+<use xlink:href="#H19" transform="translate(210,150) scale(13)"/>
+<use xlink:href="#H20" transform="translate(260,150) scale(13)"/>
+<use xlink:href="#H21" transform="translate(310,150) scale(13)"/>
+<use xlink:href="#H22" transform="translate(10,215) scale(13)"/>
+<use xlink:href="#H23" transform="translate(60,215) scale(13)"/>
+<use xlink:href="#H24" transform="translate(110,215) scale(13)"/>
+<use xlink:href="#H25" transform="translate(160,215) scale(13)"/>
+<use xlink:href="#H26" transform="translate(210,215) scale(13)"/>
+<use xlink:href="#H27" transform="translate(260,215) scale(13)"/>
+<use xlink:href="#H28" transform="translate(310,215) scale(13)"/>
+<use xlink:href="#H29" transform="translate(10,280) scale(13)"/>
+<use xlink:href="#H30" transform="translate(60,280) scale(13)"/>
+<use xlink:href="#H31" transform="translate(110,280) scale(13)"/>
+<use xlink:href="#H32" transform="translate(160,280) scale(13)"/>
+<use xlink:href="#H33" transform="translate(210,280) scale(13)"/>
+<use xlink:href="#H34" transform="translate(260,280) scale(13)"/>
+<use xlink:href="#H35" transform="translate(310,280) scale(13)"/>
+</svg>

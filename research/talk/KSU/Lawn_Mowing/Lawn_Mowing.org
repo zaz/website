@@ -1,0 +1,88 @@
+#+options: timestamp:nil toc:1 num:nil
+#+reveal_theme: serif
+#+bibliography: ../../../../cite/cs.bib
+#+title: The Lawn Mowing Problem
+#+subtitle: From Algebra to Algorithms
+
+* Summary
+[cite:@LawnMowing]
+
+Continuous generalization of the traveling salesman problem (TSP).
+
+Tour starts and ends at the same point, covers every point.
+
+* Prerequisites
+
+- Galois groups
+- Abelian property
+- Polyminoes
+- Minkowski sums
+
+** Galois groups
+
+*Polynomials are solvable by radicals iff they have enough symmetry.*
+
+*i.e. iff their Galois group is abelian (commutative)*
+
+Polynomials of order < 5 are algebraically *easy*
+- Can be solved by radicals
+\( \frac{-b \pm \sqrt{b^2-4ac}}{2a} \)
+
+Most polynomials of order ≥ 5 are algebraically *hard*
+- Cannot be solved by radicals
+
+** Polyminoes
+
+Generalized dominoes.
+
+[[./img/all_35_free_hexominoes.svg]]
+
+Shapes made up of pixels.
+
+** Minkowski sums
+
+\(
+{\color{red} R} = {\color{green} G} \bigoplus {\color{blue} B} = \{ \mathbf g + \mathbf b\ |\ \mathbf g \in {\color{green} G},\ \mathbf b \in {\color{blue} B} \}
+\)
+
+[[./img/Minkowski sum.svg]]
+
+** Real world
+
+[[./img/Minkowski-sum-of-a-polygon-with-a-disk.png]]
+
+* Efficient covering of polyminoes
+
+[[./img/different kinds of TSPs.svg]]
+
+** Efficient covering of pixels
+
+[[./img/pixel coverings.svg]]
+
+** Traveling Salesperson
+
+Problem is now reduced to the traveling salesperson problem. *Solution:*
+
+- Integer Programming (IP)
+- Large Neighborhood Search (LNS)
+
+** Lower & Upper Bounds
+
+[[./img/bounds comparison.svg]]
+
+* Conclusion
+
+*Already proven:*
+
+- the optimal tour of a polygon is polygonal itself
+
+*Proven in this paper*
+
+- the coordinates are algebraically hard
+
+*Future research:*
+
+- Better lower bounds
+
+* References
+#+print_bibliography:

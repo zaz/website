@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>QUANTAS-WACOFA</title>
+<meta name="author" content=""/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/serif.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">QUANTAS-WACOFA</h1><p class="subtitle">Quantas With A Couple Of Features Added</p>
+
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-org74147c3">Problem</a></li>
+<li><a href="#/slide-orgb0307f5">Approach</a></li>
+<li><a href="#/slide-orgfff040b">50 hours later&#x2026;</a></li>
+<li><a href="#/slide-orgec16c98">Proof of Work</a></li>
+<li><a href="#/slide-orgce69cc2">Solution</a></li>
+<li><a href="#/slide-org9a66051">Results</a></li>
+<li><a href="#/slide-orgc30932f">Additional Problems Solved</a></li>
+<li><a href="#/slide-org93af615">References</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<section id="slide-org74147c3">
+<h2 id="org74147c3">Problem</h2>
+<p>
+Quantas (<a href="#citeproc_bib_item_3">Oglio et al. 2022</a>) was lacking functionality to implement Byzantine behaviors.
+</p>
+
+<p>
+My goal was to add Byzantine behaviors that would:
+</p>
+<ul>
+<li>Barely increase code complexity of Peers</li>
+<li>Work with many different types of Peers</li>
+<li>Be easily extendable</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb0307f5">
+<h2 id="orgb0307f5">Approach</h2>
+<p>
+Write code that modifies the Peer code at runtime. <br />
+I call this code an &ldquo;infection.&rdquo;
+</p>
+
+<p class="fragment (appear)">
+<b>Assumption:</b> Every language can modify its code at runtime. Even assembly language can do this.
+</p>
+
+<p class="fragment (appear)">
+No doubt C++ can do this too.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgfff040b">
+<h2 id="orgfff040b">50 hours later&#x2026;</h2>
+<p class="fragment (appear)">
+It turns out C++ can <b>not</b> do this.
+</p>
+<p class="fragment (appear)">
+C++ is not reflective.
+</p>
+</section>
+<section id="slide-org8a3c17a">
+<h3 id="org8a3c17a">Infections as higher-order functors</h3>
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim><span style="color: #51afef;">class</span> <span style="color: #ECBE7B;">Infection</span> {
+<span style="color: #51afef;">public</span>:
+    <span style="color: #c678dd;">Infection</span>(<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>&lt;type_msg&gt;*,<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>()&gt;)&gt; <span style="color: #dcaeea;">fn</span>) : _infection(fn) {}
+    <span style="color: #c678dd;">Infection</span>(<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>&lt;type_msg&gt;*)&gt; <span style="color: #dcaeea;">fn</span>) : _fn(fn) {}
+    <span style="color: #83898d;">/** An infection is a higher-order functor:</span>
+<span style="color: #83898d;">     *</span>
+<span style="color: #83898d;">     * </span><span style="color: #a9a1e1;">@param</span><span style="color: #83898d;"> the peer that we are performing computation on</span>
+<span style="color: #83898d;">     * </span><span style="color: #a9a1e1;">@param</span><span style="color: #83898d;"> the original performComputation function</span>
+<span style="color: #83898d;">     * </span><span style="color: #a9a1e1;">@return</span><span style="color: #83898d;"> a modified version of performComputation</span>
+<span style="color: #83898d;">     */</span>
+    <span style="color: #ECBE7B;">void</span> <span style="color: #51afef;">operator</span><span style="color: #c678dd;">()</span>(<span style="color: #ECBE7B;">Peer</span>&lt;type_msg&gt;* <span style="color: #dcaeea;">peer</span>, <span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>()&gt; <span style="color: #dcaeea;">performComputation</span>) {
+        <span style="color: #51afef;">if</span> (_infection != <span style="color: #a9a1e1;">nullptr</span>)
+            _infection(peer, performComputation);
+        <span style="color: #51afef;">else</span>
+            _fn(peer, performComputation);
+    }
+  <span style="color: #51afef;">private</span>:
+    <span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>&lt;type_msg&gt;*,<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>()&gt;)&gt; <span style="color: #dcaeea;">_infection</span>;
+    <span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>&lt;type_msg&gt;*)&gt; <span style="color: #dcaeea;">_fn</span>;
+};
+</code></pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgec16c98">
+<h2 id="orgec16c98">Proof of Work</h2>
+<div class="outline-text-2" id="text-orgec16c98">
+</div>
+</section>
+<section id="slide-org6481331">
+<h3 id="org6481331">Implementation</h3>
+<div class="outline-text-3" id="text-org6481331">
+</div>
+</section>
+<section id="slide-org7bd4366">
+<h4 id="org7bd4366">Add infrastructure to &ldquo;infect&rdquo; nodes</h4>
+<p>
+Infections were originally implemented as higher-order functors (see <a href="#/slide-orgc868bf1">Infections as higher-order functors</a>), but now they are simply functions that accept a Peer as argument and modify the methods of that peer. To achieve this, new function pointers were added to <code>Peer</code> that wrap existing functionality.
+</p>
+</section>
+<section id="slide-org216257e">
+<h4 id="org216257e">Add visualization infrastructure</h4>
+<p>
+I created a Python script that will automatically generate plots based on Quantas&rsquo; JSON output. In the future, it would make sense to have Python generate the JSON input also, as that is cumbersome (see <a href="#/slide-org1fb527f">Move JSON input out of Quantas repository</a>).
+</p>
+<ul class="org-ul">
+<li><a id="orgbbfe700"></a>Git supermodule for analyzing results<br />
+<p>
+I factored out my new code for visualizing results into a git supermodule, meaning that it is a git repository that will contain Quantas as a submodule. This layer of abstraction allows both Quantas developers and end-users to fork the visualization repository and make changes to that without those changes being intertwined with the changes to Quantas itself.
+</p>
+
+<p>
+Once both Quantas and the visualization repository are both stable after this flurry of activity, I plan to add Quantas as a submodule to the visualization repository.
+</p>
+</li>
+</ul>
+</section>
+<section id="slide-org135d26a">
+<h4 id="org135d26a">Change benchmarking measure</h4>
+<p>
+<code>latency</code> is not updated if commits do not occur. This caused some problems as you can see in Results. Nghia switched to <code>throughput</code>-based benchmarking, which seems to work more smoothly. See <a href="#/slide-orge808452">Simplify logging: log everything</a> for ideas for further improvements.
+</p>
+</section>
+<section id="slide-orgd65955b">
+<h4 id="orgd65955b">Minor implementation details</h4>
+<div class="outline-text-4" id="text-orgd65955b">
+</div>
+<ul class="org-ul">
+<li><a id="org0fc3d0b"></a>Add <code>multicast</code> for specified proportion of peers<br />
+<p>
+I improved upon Rachel Bricker&rsquo;s <code>randomMulticast</code> that sends messages to a random number of peers. There is now an optional parameter to specify the proportion of peers you would like to send a message to.
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim><span style="color: #5B6268;">// </span><span style="color: #5B6268;">Multicasts to a random sample of neighbors without repetition.</span>
+
+<span style="color: #5B6268;">// </span><span style="color: #5B6268;">Sample size is a random uniform distribution between 0 and neighbours</span>
+<span style="color: #51afef;">template</span> &lt;<span style="color: #51afef;">class</span> <span style="color: #ECBE7B;">message</span>&gt;
+<span style="color: #ECBE7B;">void</span> <span style="color: #a9a1e1;">NetworkInterface</span>&lt;<span style="color: #ECBE7B;">message</span>&gt;::<span style="color: #c678dd;">randomMulticast</span>(<span style="color: #ECBE7B;">message</span> <span style="color: #dcaeea;">msg</span>) {
+    randomMulticast(msg, -<span style="color: #da8548; font-weight: bold;">1</span>);
+}
+
+<span style="color: #5B6268;">// </span><span style="color: #5B6268;">Same, but sample size is number of neighbours * p, rounded down.</span>
+<span style="color: #51afef;">template</span> &lt;<span style="color: #51afef;">class</span> <span style="color: #ECBE7B;">message</span>&gt;
+<span style="color: #ECBE7B;">void</span> <span style="color: #a9a1e1;">NetworkInterface</span>&lt;<span style="color: #ECBE7B;">message</span>&gt;::<span style="color: #c678dd;">randomMulticast</span>(<span style="color: #ECBE7B;">message</span> <span style="color: #dcaeea;">msg</span>, <span style="color: #ECBE7B;">float</span> <span style="color: #dcaeea;">p</span>) {
+
+    <span style="color: #ECBE7B;">int</span> <span style="color: #dcaeea;">amountOfNeighbors</span>;
+    <span style="color: #51afef;">if</span> (p &lt; <span style="color: #da8548; font-weight: bold;">0</span>)
+        amountOfNeighbors = uniformInt(<span style="color: #da8548; font-weight: bold;">0</span>, _neighbors.size());
+    <span style="color: #51afef;">else</span>
+        amountOfNeighbors = _neighbors.size() * p;
+
+    <span style="color: #5B6268;">// </span><span style="color: #5B6268;">previous implementation</span>
+}
+</code></pre>
+</div>
+</li>
+<li><a id="org0e0034f"></a>Next: Change output file extension: <code>.txt</code> → <code>.json</code><br />
+<p>
+This makes it more obvious what format the output is in. Thanks to Mitch for the suggestion.
+</p>
+</li>
+<li><a id="orgcb9c737"></a>Next: Automatic linting<br />
+<p>
+Fix all whitespace errors and set up automatic linting using a git pre-commit hook.
+</p>
+</li>
+</ul>
+</section>
+<section id="slide-orge2d30d5">
+<h3 id="orge2d30d5">Abandoned approaches</h3>
+<div class="outline-text-3" id="text-orge2d30d5">
+</div>
+</section>
+<section id="slide-orgc868bf1">
+<h4 id="orgc868bf1">Infections as higher-order functors</h4>
+<p>
+In my first implementation, I created an Infection class which created higher-order functors, but this seemed to introduce complexity for no benefit. I switched Infections to simply being functions that accept callbacks instead.
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim><span style="color: #51afef; font-weight: bold;">#include</span> <span style="color: #98be65;">&lt;functional&gt;</span>
+<span style="color: #51afef; font-weight: bold;">#include</span> <span style="color: #98be65;">"Peer.hpp"</span>
+
+<span style="color: #51afef;">using</span> <span style="color: #a9a1e1;">std</span>::<span style="color: #a9a1e1;">function</span>;
+
+<span style="color: #51afef;">namespace</span> <span style="color: #a9a1e1;">quantas</span> {
+
+<span style="color: #51afef;">template</span>&lt;<span style="color: #51afef;">class</span> <span style="color: #ECBE7B;">type_msg</span>&gt;
+<span style="color: #51afef;">class</span> <span style="color: #ECBE7B;">Infection</span> {
+    <span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;*,<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>()&gt;)&gt; <span style="color: #dcaeea;">_infection</span>;
+    <span style="color: #5B6268;">// </span><span style="color: #5B6268;">allow infections that don't take performComputation as an argument</span>
+    <span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;*)&gt; <span style="color: #dcaeea;">_fn</span>;
+<span style="color: #51afef;">public</span>:
+    <span style="color: #c678dd;">Infection</span>(<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;*,<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>()&gt;)&gt; <span style="color: #dcaeea;">fn</span>) :
+        _infection(fn) {}
+    <span style="color: #c678dd;">Infection</span>(<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;*)&gt; <span style="color: #dcaeea;">fn</span>) : _fn(fn) {}
+
+    <span style="color: #83898d;">/**</span>
+<span style="color: #83898d;">        * An infection is a higher-order functor:</span>
+<span style="color: #83898d;">        *</span>
+<span style="color: #83898d;">        * </span><span style="color: #a9a1e1;">@param</span><span style="color: #83898d;"> the peer that we are performing computation on</span>
+<span style="color: #83898d;">        * </span><span style="color: #a9a1e1;">@param</span><span style="color: #83898d;"> the original performComputation function</span>
+<span style="color: #83898d;">        * </span><span style="color: #a9a1e1;">@return</span><span style="color: #83898d;"> a modified version of performComputation</span>
+<span style="color: #83898d;">        */</span>
+    <span style="color: #ECBE7B;">void</span> <span style="color: #51afef;">operator</span><span style="color: #c678dd;">()</span>(<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;* <span style="color: #dcaeea;">peer</span>, <span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>()&gt; <span style="color: #dcaeea;">performComputation</span>) {
+        <span style="color: #51afef;">if</span> (_infection != <span style="color: #a9a1e1;">nullptr</span>)
+            _infection(peer, performComputation);
+        <span style="color: #51afef;">else</span>
+            _fn(peer, performComputation);
+    }
+};
+
+}
+</code></pre>
+</div>
+</section>
+<section id="slide-orga22e5b2">
+<h4 id="orga22e5b2">Infections accepting callbacks</h4>
+<p>
+My next approach was to code an infection as replacement methods that would accept, as a callback, the original method that it would replace. I abandoned this approach in favor of infections as functions that modify a peer. This seems to be the most natural approach, and one that is intuitively easy to explain.
+</p>
+
+</section>
+<section id="slide-org55ffbc5">
+<h3 id="org55ffbc5">Results</h3>
+<p>
+Unless stated otherwise, 1,000 simulations were run using PBFTPeer for both the control case (where all peers are correct indefinitely) and the Byzantine case (where peers are infected at time 200). All simulations were run with a delay of 10.
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Plot symbol</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Semi-transparent blue dot</td>
+<td class="org-left">Results of a simulation of all-correct peers</td>
+</tr>
+
+<tr>
+<td class="org-left">Semi-transparent red dot</td>
+<td class="org-left">Results of a simulation including &ldquo;infected&rdquo; peers</td>
+</tr>
+
+<tr>
+<td class="org-left">Blue shaded region</td>
+<td class="org-left">95% confidence interval</td>
+</tr>
+
+<tr>
+<td class="org-left">Red shaded region</td>
+<td class="org-left">95% confidence interval</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="slide-org745101a">
+<h4 id="org745101a">Latency</h4>
+<p>
+I began by using a <code>crash</code> infection that simply halts a peer and the pre-programmed <code>latency</code> log of the PBFTPeer. Latency is a self-report from peer 0 of the time since the last commit. This has the drawback that it logs average cumulative latency. Hence the output plot is not trivial to interpret: sudden jumps in latency appear as a transition from a constant function to a hyperbolic one, which is exactly what we see below.
+</p>
+
+<p>
+<img src="./img/0/i10t.png" alt="i10t.png" />
+<img src="./img/0/i32t.png" alt="i32t.png" />
+</p>
+
+<p>
+Note that the patterns you see are not plotting artifacts, they are the actual cumulative averages of each simulation. Cumulative averaging of integral changes results in the hyperbolic geometry that you see.
+</p>
+
+<ul class="org-ul">
+<li><a id="org3ba0ab2"></a>Edge cases<br />
+<p>
+Here, infected nodes flatline because crashed nodes stop reporting the latency.
+<img src="./img/0/i01t.png" alt="i01t.png" />
+<img src="./img/0/i33t.png" alt="i33t.png" />
+<img src="./img/0/i34t.png" alt="i34t.png" />
+</p>
+</li>
+</ul>
+
+</section>
+<section id="slide-org56b8aa2">
+<h4 id="org56b8aa2">Throughput</h4>
+<p>
+Next, I switched to measuring throughput, which is the total number of commits that have occurred (according to peer 0).
+</p>
+
+
+<div id="org389fb67" class="figure">
+<p><img src="./img/1/i32t.png" alt="i32t.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li><a id="orgd4103e5"></a>Edge cases<br />
+<div id="org1574eb0" class="figure">
+<p><img src="./img/1/i01t.png" alt="i01t.png" />
+</p>
+</div>
+
+<p>
+<i>Using 100 simulations instead of 1,000:</i>
+<img src="./img/1/i33t.png" alt="i33t.png" />
+Interestingly, we see that pBFT is failing for 33/100 nodes crashing. This is surprising because this is the most benign kind of fault and pBFT is designed to handle \(\frac{n-1}{3}\) faults, where \(n\) is the number of peers(<a href="#citeproc_bib_item_1">Castro and Liskov 1999</a>).
+</p>
+</li>
+</ul>
+
+</section>
+<section id="slide-orgf9f7f8d">
+<h4 id="orgf9f7f8d">With censorship</h4>
+<p>
+<i>Note: From this point forward, all plots are with 12 simulations for each of control and infected cases.</i>
+</p>
+
+<p>
+Applying censorship resulted in no statistically significant change in throughput up to 99/100 nodes. Censoring the final node caused the system to fail. This could be related to view changes not being implemented. As the code is written now, peer 0 is hard-coded to be the view leader, and my code infects nodes in reverse order, leaving peer 0 until last (the reason for this is peer 0 is also conventionally the node that handles logging).
+</p>
+
+<p>
+<img src="./img/2/i99.png" alt="i99.png" />
+<img src="./img/2/i100.png" alt="i100.png" />
+</p>
+
+</section>
+<section id="slide-orgef6d603">
+<h4 id="orgef6d603">With equivocation</h4>
+<p>
+Next I tested equivocating on the commit message by sending the commit to a random selection of peers (see <a href="#/slide-org0fc3d0b">Add <code>multicast</code> for specified proportion of peers</a>) and not sending it to the rest. With more than 45 equivocating peers, this began to slow down the network drastically.
+</p>
+
+<p>
+<img src="./img/3/i50.png" alt="i50.png" />
+<img src="./img/3/i51.png" alt="i51.png" />
+</p>
+
+</section>
+<section id="slide-org3468783">
+<h3 id="org3468783">Unresolved questions</h3>
+<div class="outline-text-3" id="text-org3468783">
+</div>
+</section>
+<section id="slide-org0987b36">
+<h4 id="org0987b36">Is <code>[&amp;]</code> an appropriate way to capture <code>this</code>?</h4>
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim><span style="color: #a9a1e1;">std</span>::<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #dcaeea;">message</span>)&gt; <span style="color: #dcaeea;">send</span> = [&amp;] (<span style="color: #ECBE7B;">message</span> <span style="color: #dcaeea;">msg</span>) {
+    <span style="color: #a9a1e1;">NetworkInterface</span>&lt;<span style="color: #ECBE7B;">message</span>&gt;::broadcast(msg);
+};
+</code></pre>
+</div>
+</section>
+<section id="slide-org3de3426">
+<h4 id="org3de3426">Is passing <code>this</code> best practice?</h4>
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim><span style="color: #51afef;">virtual</span> <span style="color: #ECBE7B;">void</span> <span style="color: #c678dd;">defaultComputation</span> () = <span style="color: #da8548; font-weight: bold;">0</span>;
+<span style="color: #a9a1e1;">std</span>::<span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>*)&gt; <span style="color: #dcaeea;">computationPerformer</span> = [] (<span style="color: #ECBE7B;">Peer</span>* <span style="color: #dcaeea;">peer</span>) {
+    peer-&gt;defaultComputation();
+};
+<span style="color: #ECBE7B;">void</span> <span style="color: #c678dd;">performComputation</span> () { computationPerformer(<span style="color: #51afef;">this</span>); };
+</code></pre>
+</div>
+</section>
+<section id="slide-org27dff65">
+<h4 id="org27dff65">Unnecessary looping?</h4>
+<p>
+Is looping over <code>_neighbours</code> in the below code necessary, or can it be removed? Is there any reason sending a message with a target that doesn&rsquo;t exist would cause issues?
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim><span style="color: #5B6268;">// </span><span style="color: #5B6268;">Send to a single designated neighbor</span>
+<span style="color: #51afef;">template</span> &lt;<span style="color: #51afef;">class</span> <span style="color: #ECBE7B;">message</span>&gt;
+<span style="color: #ECBE7B;">void</span> <span style="color: #a9a1e1;">NetworkInterface</span>&lt;<span style="color: #ECBE7B;">message</span>&gt;::<span style="color: #c678dd;">unicastTo</span>(<span style="color: #ECBE7B;">message</span> <span style="color: #dcaeea;">msg</span>, <span style="color: #ECBE7B;">long</span> <span style="color: #dcaeea;">dest</span>){
+    <span style="color: #51afef;">for</span>(<span style="color: #51afef;">auto</span> <span style="color: #dcaeea;">it</span> = _neighbors.begin(); it != _neighbors.end(); it++){
+        <span style="color: #51afef;">if</span>(*it == dest) {
+            <span style="color: #ECBE7B;">Packet</span>&lt;<span style="color: #ECBE7B;">message</span>&gt; <span style="color: #dcaeea;">outPacket</span> = Packet&lt;<span style="color: #ECBE7B;">message</span>&gt;(-<span style="color: #da8548; font-weight: bold;">1</span>);
+            outPacket.setSource(id());
+            outPacket.setTarget(*it);
+            outPacket.setMessage(msg);
+            _outStream.push_back(outPacket);
+        }
+    }
+}
+</code></pre>
+</div>
+
+</section>
+<section id="slide-orgdaf3862">
+<h3 id="orgdaf3862">Suggestions for Future Research</h3>
+<div class="outline-text-3" id="text-orgdaf3862">
+</div>
+</section>
+<section id="slide-orgb60c797">
+<h4 id="orgb60c797">Allow taking JSON on <code>stdin</code></h4>
+<p>
+The convention with Unix-style programs is to use <code>program -</code> to mean: Instead of reading from the file represented by the first argument, read from <code>stdin</code> instead. This will make it more convenient for programs that use Quantas to feed it JSON they generated. Instead of writing a file and giving that to Quantas, or passing a file by file descriptor, which is not portable, programs will have the third option of passing data via <code>stdin</code>.
+</p>
+</section>
+<section id="slide-org1fb527f">
+<h4 id="org1fb527f">Move JSON input out of Quantas repository</h4>
+<p>
+It is not conventional to store the input to a program in the same repository as the code for that program. I suggest removing the Makefile entries for different program inputs and moving the JSON input files into the supermodule, Quantas-analysis. This allows end-users to develop version-control their own analysis independently of Quantas core development, allowing seamless updates of Quantas.
+</p>
+</section>
+<section id="slide-orgb6fbd05">
+<h4 id="orgb6fbd05">Deal with peers symmetrically</h4>
+<p>
+If we are able to refactor Quantas in a way that we never subscript peers before they are randomly shuffled, it could provide benefits to user by allowing people to hack on Quantas more easily. For example, when I first started building Byzantine peers, I found it more convenient to make the first X peers Byzantine. This is only a safe approach if nothing else in the codebase picks a range of peers deterministically. Unfortunately for me, <code>_peers[0]</code> is hard-coded as indispensable.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim>_peers[<span style="color: #da8548; font-weight: bold;">0</span>]-&gt;endOfRound(_peers);
+</code></pre>
+</div>
+</section>
+<section id="slide-org38b70b5">
+<h4 id="org38b70b5">Output file management</h4>
+<p>
+First, I created <code>results</code> to keep all of my results in one place. Then I created various subdirectories to manage results for different parameters. Then I modified Quantas and moved <code>results</code> to <code>old/results0</code> because I wanted to keep a copy of the results from before I modified Quantas. It would be better if Quantas handles all of this administrative work.
+</p>
+
+<p>
+We could do this simply by storing results in e.g.<br />
+<code>results/v1.0/pBFT/delay10/rounds400/peers100/infect10</code>. This seems like a convoluted way of doing things, but it actually reduced duplication of computation while experimenting with Quantas. A user may want to try many different approaches before deciding on the one they want to present, by which point their output files have become an organizational nightmare. This would also eliminate the chance of user error in naming the output files; currently it is easy to set <code>rounds: 400</code> in the config file, but forget to change the output filename to reflect that parameter.
+</p>
+
+<p>
+This approach could be taken even further to eliminate JSON input files altogether and have the entire input state represented in the filepath. This would allow us to avoid accidental duplication of work by checking the <code>mtime</code> on the files, like <code>make</code> does. A hybrid option would also be possible, where a JSON file exists in <code>pBFT/</code> and those options are added to all simulations.
+</p>
+<ul class="org-ul">
+<li><a id="orgba53435"></a>Automatic output file generation<br />
+<p>
+We could even take this one step further and add a filesystem watcher so that, when an empty <code>.json</code> file is created in a subdirectory, Quantas adds it to a queue to generate output for it.
+</p>
+</li>
+</ul>
+</section>
+<section id="slide-org94e8ecd">
+<h4 id="org94e8ecd">Build a Domain-Specific Language</h4>
+<p>
+When I first created a way to infect nodes, I hard-coded into <code>Simulation.hpp</code>  I then moved this functionality into the config file, but if we keep doing this for every feature, the complexity of the config files will balloon.  It might be better to make the config files Turing-complete, i.e. make a DSL.
+</p>
+
+<p>
+I expect that making a DSL will lead to simplifications of Quantas and could even allow techniques from compiler optimization to be used to speed up Quantas.
+</p>
+
+<p>
+Note that a DSL is not compatible with the previous suggestion to move all configuration to the file path, but it is compatible with the hybrid approach of storing some configuration in the file path.
+</p>
+</section>
+<section id="slide-org79d9b7a">
+<h4 id="org79d9b7a">Make every peer log</h4>
+<p>
+At the moment, logging is done from the perspective of one peer only.
+</p>
+</section>
+<section id="slide-org33f450c">
+<h4 id="org33f450c">Community engagement</h4>
+<div class="outline-text-4" id="text-org33f450c">
+</div>
+<ul class="org-ul">
+<li><a id="orgc11150b"></a>Don&rsquo;t display the main repository as a fork<br />
+<p>
+GitHub displays notices at the top of the Quantas repository:
+</p>
+<blockquote >
+<p>
+forked from khood5/distributed-consensus-abstract-simulator
+</p>
+</blockquote>
+
+<blockquote >
+<p>
+This branch is 124 commits ahead of khood5:master.
+</p>
+</blockquote>
+<p>
+This gives the impression that QuantasSupport/Quantas is not the canonical source for Quantas. This can be easily fixed by contacting GitHub customer support.
+</p>
+</li>
+<li><a id="orgfc8421c"></a>Git authors should be individuals<br />
+<p>
+Having QuantasSupport registered as a user rather than an organization and then using that anonymous account to commit to the repository is highly irregular. This can cause community trust issues due to not knowing which individuals authored each part of the project. Quantas contributors should be informed that using a full name for FOSS contributions is the norm.
+</p>
+
+<p>
+The Quantas repository can be moved under an organization, such as QuntasSim in a way that automatically redirects QuantasSupport/Quantas → QuantasSim/Quantas.
+</p>
+</li>
+<li><a id="orgca1a32c"></a>Project discoverability<br />
+<p>
+Use tags. Create a banner for the repository. Create a logo.
+</p>
+</li>
+</ul>
+</section>
+<section id="slide-orge808452">
+<h4 id="orge808452">Simplify logging: log everything</h4>
+<p>
+The way logging is currently done could be simplified: We could simply log every event and the time at which it occurred. Currently, pBFT outputs a time-series of throughputs, which is very easy to work with, but it is not the natural format for this data. We have a number of different events occurring on different rounds. If we were to simply record pairs (time, event) that would allow more flexibility when it comes to analyzing the data. The parsing is more complex than a time series, but libraries exist that will handle that for you. This avoids having to modify the code for the computation and re-run the simulation, which is expensive.
+</p>
+</section>
+<section id="slide-orgce9e9a4">
+<h4 id="orgce9e9a4">Unit testing</h4>
+<p>
+Once I had a working visualization system, I would use that after each change I made. I would visually check that the plot generated looked the same as the previous one to ensure I hadn&rsquo;t made any coding errors. It would be better to automate this. You could have both a light test suite, to briefly check correctness before each commit, and a more extensive test suite that runs automatically on GitHub when a pull request is submitted.
+</p>
+</section>
+<section id="slide-orgad1faa8">
+<h4 id="orgad1faa8">Latin hypercube sampling</h4>
+<p>
+We could use Latin hypercube sampling to reduce the number of tests needed for a desired precision.  With LHS, Precision is proportional to \(1/n\) instead of \(1/\sqrt{n}\). LHS is an extension of stratification that works by replacing each type of random decision with a dimension in a Latin Hypercube. This may be problematic in our case, though, as generation of high-dimensional Latin hypercubes is hard. One solution is dimensionality reduction: Pick only your most correlated categories of decisions and use LHS for those categories, while using random number generation for the rest.
+(<a href="#citeproc_bib_item_2">Damblin, Couplet, and Iooss 2013</a>)
+</p>
+
+</section>
+<section id="slide-org5629d8f">
+<h4 id="org5629d8f">Alternatively, replace PRNG with QRNG</h4>
+<p>
+A simpler solution may be to replace most instances of pseudorandom number generators with quasirandom number generators. QRNGs produce low-discrepancy sequences that increase uniformity of the resultant sequence.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgce69cc2">
+<h2 id="orgce69cc2">Solution</h2>
+<p class="fragment (appear)">
+An infection is a function that modifies a peer.
+</p>
+<p class="fragment (appear)">
+Infections can be specified in the config file.
+</p>
+<p class="fragment (appear)">
+An &ldquo;infected&rdquo; node is simply a node with modified behavior. It is no longer <i>guaranteed</i> to be correct, but it <i>may</i> be correct.
+</p>
+
+</section>
+<section id="slide-orgd5cc9a2">
+<h3 id="orgd5cc9a2">Peer.hpp</h3>
+<p>
+Old:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim><span style="color: #51afef;">virtual</span> <span style="color: #ECBE7B;">void</span> <span style="color: #c678dd;">performComputation</span>() = <span style="color: #da8548; font-weight: bold;">0</span>;
+</code></pre>
+</div>
+
+<p>
+New:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim><span style="color: #51afef;">virtual</span> <span style="color: #ECBE7B;">void</span> <span style="color: #c678dd;">defaultComputation</span>() = <span style="color: #da8548; font-weight: bold;">0</span>;
+
+<span style="color: #51afef;">auto</span> <span style="color: #dcaeea;">computationPerformer</span> = [] (<span style="color: #ECBE7B;">Peer</span>* <span style="color: #dcaeea;">peer</span>)
+    { peer-&gt;defaultComputation(); };
+
+<span style="color: #ECBE7B;">void</span> <span style="color: #c678dd;">performComputation</span>()
+    { computationPerformer(<span style="color: #51afef;">this</span>); };
+
+</code></pre>
+</div>
+</section>
+<section id="slide-org9a56124">
+<h3 id="org9a56124">infect.hpp</h3>
+<div class="org-src-container">
+
+<pre  class="src src-C++"   ><code trim><span style="color: #51afef;">template</span>&lt;<span style="color: #51afef;">class</span> <span style="color: #ECBE7B;">type_msg</span>&gt;
+<span style="color: #ECBE7B;">map</span>&lt;<span style="color: #ECBE7B;">string</span>, <span style="color: #ECBE7B;">function</span>&lt;<span style="color: #ECBE7B;">void</span>(<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;* <span style="color: #dcaeea;">peer</span>)&gt;&gt; <span style="color: #dcaeea;">infection</span> = {
+    { <span style="color: #98be65;">"crash"</span>, [](<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;* <span style="color: #dcaeea;">peer</span>) {
+        peer-&gt;computationPerformer = [](<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;* <span style="color: #dcaeea;">peer</span>) {};
+    } },
+    { <span style="color: #98be65;">"censor"</span>, [](<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;* <span style="color: #dcaeea;">peer</span>) {
+        peer-&gt;submitTransPerformer = [](<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;* <span style="color: #dcaeea;">peer</span>, <span style="color: #ECBE7B;">int</span> <span style="color: #dcaeea;">tranID</span>) {};
+    } },
+    { <span style="color: #98be65;">"equivocate"</span>, [](<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;* <span style="color: #dcaeea;">peer</span>) {
+        peer-&gt;sendMsg = [](<span style="color: #ECBE7B;">Peer</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;* <span style="color: #dcaeea;">peer</span>, <span style="color: #ECBE7B;">type_msg</span> <span style="color: #dcaeea;">msg</span>)
+            { peer-&gt;<span style="color: #a9a1e1;">NetworkInterface</span>&lt;<span style="color: #ECBE7B;">type_msg</span>&gt;::randomMulticast(msg); };
+    } }
+}
+</code></pre>
+</div>
+
+</section>
+<section id="slide-org20c430b">
+<h3 id="org20c430b">Input JSON</h3>
+<div class="org-src-container">
+
+<pre  class="src src-JSON"   ><code trim>      .
+      .
+      .
+      "infectPeersAtRound": 200,
+      "numberOfPeersToInfect": 32,
+      "infectionType": "equivocate",
+      .
+      .
+      .
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org9a66051">
+<h2 id="org9a66051">Results</h2>
+<p>
+Crashing, censoring, and equivocating, were all tested. Plots showing throughput over time are in <a href="#/slide-orgec16c98">Proof of Work</a>.
+</p>
+<p class="fragment (appear)">
+Equivocating was tested in the trivial case that a peer sends a correct message to some nodes and no message to the rest.
+</p>
+<p class="fragment (appear)">
+(The details are moot because Quantas does not handle simulating DoS.)
+</p>
+
+</section>
+<section id="slide-orgc7ff247">
+<h3 id="orgc7ff247">Varying Degree of Equivocation</h3>
+
+<div id="org5ef3833" class="figure">
+<p><img src="./img/4/i32equivocating.svg" alt="i32equivocating.svg" class="org-svg" />
+</p>
+</div>
+
+</section>
+<section id="slide-org04d7fbf">
+<h3 id="org04d7fbf">Varying Number of Nodes Equivocating</h3>
+
+<div id="org6cb717c" class="figure">
+<p><img src="./img/4/e55.svg" alt="e55.svg" class="org-svg" />
+</p>
+</div>
+
+</section>
+<section id="slide-org0bc742d">
+<h3 id="org0bc742d">Same, but with Throughput</h3>
+
+<div id="orgfceada6" class="figure">
+<p><img src="./img/4/e55throughput.svg" alt="e55throughput.svg" class="org-svg" />
+</p>
+</div>
+
+</section>
+<section id="slide-org6bfe0ff">
+<h3 id="org6bfe0ff">Interpretation</h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Symbol</th>
+<th scope="col" class="org-left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Latency</td>
+<td class="org-left">The number of rounds to confirm a commit</td>
+</tr>
+
+<tr>
+<td class="org-left">Degree of equivocation</td>
+<td class="org-left">% of peers that are not sent a correct message</td>
+</tr>
+
+<tr>
+<td class="org-left">Black line</td>
+<td class="org-left">Latency averaged over 1000 rounds × 20 simulations</td>
+</tr>
+
+<tr>
+<td class="org-left">Red shaded region</td>
+<td class="org-left">95% confidence interval</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc30932f">
+<h2 id="orgc30932f">Additional Problems Solved</h2>
+<ul>
+<li>Developed a visualization solution with NumPy and Matplotlib.</li>
+<li>Developed a git post-receive hook that enables automated and reproducible simulations.
+<ul>
+<li>Output is stored as a git commit that contains a hash of the code that generated it.</li>
+<li>(<a href="#citeproc_bib_item_4">Vallet, Michonneau, and Tournier 2022</a>)</li>
+
+</ul></li>
+<li>Produced recommendations for open source community engagement</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org93af615">
+<h2 id="org93af615">References</h2>
+<style>.csl-entry{text-indent: -1.5em; margin-left: 1.5em;}</style><div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Castro, Miguel, and Barbara Liskov. 1999. “Practical Byzantine Fault Tolerance.” In <i>Proceedings of the Third Symposium on Operating Systems Design and Implementation</i>, 173–86. Osdi ’99. New Orleans, Louisiana, USA: USENIX Association.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>Damblin, G, M Couplet, and B Iooss. 2013. “Numerical Studies of Space-Filling Designs: Optimization of Latin Hypercube Samples and Subprojection Properties.” <i>Journal of Simulation</i> 7 (4): 276–89. <a href="https://doi.org/10.1057/jos.2013.16">https://doi.org/10.1057/jos.2013.16</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>Oglio, Joseph, Kendric Hood, Mikhail Nesterenko, and Sebastien Tixeuil. 2022. “Quantas: Quantitative User-Friendly Adaptable Networked Things Abstract Simulator.” <i>Proceedings of the 2022 Workshop on Advanced Tools, Programming Languages, and Platforms for Implementing and Evaluating Algorithms for Distributed Systems</i>, July. <a href="https://doi.org/10.1145/3524053.3542744">https://doi.org/10.1145/3524053.3542744</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>Vallet, Nicolas, David Michonneau, and Simon Tournier. 2022. “Toward Practical Transparent Verifiable and Long-Term Reproducible Research Using Guix.” <i>Scientific Data</i> 9 (1). <a href="https://doi.org/10.1038/s41597-022-01720-9">https://doi.org/10.1038/s41597-022-01720-9</a>.</div>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+#+reveal_theme: serif
+#+options: timestamp:nil toc:1 num:nil
+#+bibliography: ../../../../cite/cs.bib
+#+title: GOAFR
+#+subtitle: Geographic Routing Using Ellipses
+
+* Fun Fact
+*Area of a Triangle*
+
+\begin{align*}
+\left(A + B + C - \pi\right) R^2 \tag{spherical} \\
+-\left(A + B + C - \pi\right) R^2 \tag{hyperbolic}
+\end{align*}
+
+*Does not depend on distance!* Only on the 3 angles and the curvature of the space.
+
+
+* Definitions
+
+\(d(a,b)\): distance between \(a\) and \(b\) \\
+UDG: Graph: \(a\) and \(b\) are neighbors iff \(d(a,b) \leq 1\) \\
+\(c(e)\): cost of sending a message over edge \(e\):
+
+- hop metric: \(c(e) := 1\)
+- Euclidean metric: \(c(e) := |e|\)
+- energy metric: \(c(e) := |e|^2\)
+
+All metrics polynomial in \(|e|\) have the same asymptotic message complexity.
+
+
+* Geographic Routing
+
+Route from \(s\) to \(t\)
+
+- \(s\) knows coordinates of \(t\)
+- nodes know their neighbors' coordinates
+- nodes *do not know* the entire network structure
+
+** Solutions
+
+- Route to neighbor closest to \(t\) - does not always work
+- Route to neighbor closest angle to \(t\) - does not always work
+- Route around faces - not efficient
+
+
+* Main Result
+
+GOAFR: Greedy + A bounding ellipse + OFR
+
+- [[Worst-case optimal]]: \(O(\overline{st}^2)\)
+- [[Simulations][practically efficient]]
+
+** FR vs OFR
+
+#+attr_html: :width 80%
+[[./img/FR-OFR.svg]]
+
+** GOFR
+
+Greedy + OFR
+
+#+attr_html: :width 70%
+[[./img/GOFR.svg]]
+
+** Worst-case optimal
+
+\(O(\overline{st}^2)\)
+
+#+attr_html: :width 80%
+[[./img/GOAFR-suboptimality.svg]]
+
+* Simulations
+
+\( \text{path span} = \frac{\text{shortest path(s, t)}}{d(s,t)} \)
+
+[[./img/path-span-network-density.svg]]
+
+** Critically dense network
+
+#+attr_html: :width 80%
+[[./img/critically-dense-network.svg]]

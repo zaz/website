@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Tool</title>
+<meta name="author" content=""/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/serif.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Tool</h1><p class="subtitle">An Efficient and Flexible Simulator for Byzantine Fault-Tolerant Protocols</p>
+
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-org8a1aad4">Summary</a></li>
+<li><a href="#/slide-org9ce1610">Tool vs Quantas</a></li>
+<li><a href="#/slide-orga55db7b">Code</a></li>
+<li><a href="#/slide-org43c14cf">Visualization</a></li>
+<li><a href="#/slide-orge6098b4">Twins</a></li>
+<li><a href="#/slide-org4306d95">References</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<section id="slide-org8a1aad4">
+<h2 id="org8a1aad4">Summary</h2>
+<p>
+Tool (<a href="#citeproc_bib_item_2">Wang et al. 2022</a>) is an abstract network simulator for BFT protocols.
+</p>
+
+<p>
+More specific than Quantas: only BFT algorithms.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org9ce1610">
+<h2 id="org9ce1610">Tool vs Quantas</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Quantas</th>
+<th scope="col" class="org-left">Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Scope</b></td>
+<td class="org-left">All networks</td>
+<td class="org-left">BFT algorithms</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Functionality</b></td>
+<td class="org-left">Benchmarking</td>
+<td class="org-left">Benchmarking, testing, verifying</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Metric</b></td>
+<td class="org-left">Number of rounds</td>
+<td class="org-left">Time usage &amp; message usage</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Byzantine behaviors</b></td>
+<td class="org-left">Under development</td>
+<td class="org-left">Implemented</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Language</b></td>
+<td class="org-left">C++</td>
+<td class="org-left">JavaScript</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orge8efb40">
+<h3 id="orge8efb40">Byzantine Behavior</h3>
+<ul>
+<li>In Quantas, attacks modify peers.</li>
+<li>In Tool, attacks modify messages between peers.
+<ul>
+<li><b>Rushing</b> attacks</li>
+<li>Network partition attacks</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orga55db7b">
+<h2 id="orga55db7b"><a href="https://github.com/csienslab/BFT-Simulator/">Code</a></h2>
+<ul>
+<li>Written in JavaScript</li>
+<li>No activity</li>
+<li>Visualization with Python</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org43c14cf">
+<h2 id="org43c14cf">Visualization</h2>
+
+<div id="org742f221" class="figure">
+<p><img src="./bar chart.png" alt="bar chart.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgc75b673">
+<h3 id="orgc75b673">Heatmap</h3>
+<p>
+<img src="./heatmap.png" alt="heatmap.png" />
+Each node’s view during HotStuff+NS execution \((λ = 150; N = (250, 50))\). <b>Each color represents a view number.</b>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orge6098b4">
+<h2 id="orge6098b4">Twins</h2>
+<p>
+(<a href="#citeproc_bib_item_1">Bano et al. 2020</a>)
+</p>
+
+<p>
+Automatic generator for Byzantine behaviors:
+</p>
+<ul>
+<li>Equivocation</li>
+<li>Double voting</li>
+<li>Losing internal state</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org4306d95">
+<h2 id="org4306d95">References</h2>
+<style>.csl-entry{text-indent: -1.5em; margin-left: 1.5em;}</style><div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Bano, Shehar, Alberto Sonnino, Andrey Chursin, Dmitri Perelman, and Dahlia Malkhi. 2020. “Twins: White-Glove Approach for BFT Testing.” <i>Corr</i> abs/2004.10617. <a href="https://arxiv.org/abs/2004.10617">https://arxiv.org/abs/2004.10617</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>Wang, Ping-Lun, Tzu-Wei Chao, Chia-Chien Wu, and Hsu-Chun Hsiao. 2022. “Tool: An Efficient and Flexible Simulator for Byzantine Fault-Tolerant Protocols.” <i>2022 52nd Annual Ieee/Ifip International Conference on Dependable Systems and Networks (Dsn)</i>, June. <a href="https://doi.org/10.1109/dsn53405.2022.00038">https://doi.org/10.1109/dsn53405.2022.00038</a>.</div>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>

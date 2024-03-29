@@ -1,0 +1,163 @@
+#+reveal_theme: serif
+#+options: timestamp:nil toc:1 num:nil
+#+bibliography: ../../../../cite/cs.bib
+#+LaTeX: \usepackage{mwe}
+#+LaTeX: \usepackage{tikz}
+#+title: ICCs \sim ECCs
+#+subtitle: There is a 1:1 correspondence between Interactive Consensus conditions and Error-Correcting Codes.
+
+* Riddle
+
+You have 27 coins, 1 of which is a different weight. Using a balance scale with 2 pans, how can you determine which coin is different in only 4 weighings?
+
+Generalize this to N coins.
+
+
+* Background
+
+Asynchronous consensus is impossible [cite:@FLP]
+
+3 circumventions:
+
+1. weaken: approximate agreement, set agreement, randomized solutions
+2. strengthen synchrony: partially synchronous, failure detectors
+3. *condition-based approach:* place restrictions on the input to processes
+
+   #+begin_notes
+   3 will be the focus of this paper
+   #+end_notes
+
+** Condition-based approach
+
+Assume a likely case:
+
+- Fast termination in likely case
+
+- Still safe in unlikely case
+
+
+* Prerequisites
+
+** Hamming distance
+
+Number of symbols that differ:
+
+\begin{align*}
+[\ {\color{red}{0\  1\  0}}\  0\  1\ ] \\
+[\ {\color{red}{1\  0\  1}}\  0\  1\ ] \\
+\end{align*}
+
+The above two words have a Hamming distance of 3.
+
+** Hamming distance /is/ a distance
+
+Place every possible word in a binary hypercube:
+[[./img/binary cube.svg]]
+
+\(\ell_1\) distance is the Hamming distance
+
+** Coding
+
+Naively send message 3×
+
+*or* [[https://en.wikipedia.org/wiki/Polynomial_code][cleverly pick code words]]:
+
+\begin{align*}
+00000\quad 00111\quad 01110\quad 01001 \\
+11100\quad 11011\quad 10010\quad 10101
+\end{align*}
+
+Hamming distance \( \geq 2 \).
+
+8 code words \( \implies \) 3 bits of information sent
+
+#+begin_notes
+The above codewords were generated using polynomial division on a binary field or, if you're trying to impress the ladies, a binary Galois field.
+
+How codewords are generated is a little complicated, but using the codewords is very simple.
+#+end_notes
+
+** Coding theory
+
+A code \(C\) is \( (f_v, f_c) \)-error/erasure decoding iff its minimal hamming distance is \( > 2f_v + f_c \)
+
+The original, Hamming(7,4), had a minimal hamming distance of 3:
+
+[[./img/Hamming(7,4).svg]]
+
+* Main Results
+
+** General Idea
+
+[[./img/ICCs-ECCs-fig1-fig2.png]]
+
+** *1.* ICCs \sim ECCs
+
+{conditions that allow IC to be solved despite \(f_c\) crashes and \(f_e\) value domain faults}
+
+\(\wr\)
+
+{ECCs capable of recovering from \(f_c\) erasures and \(f_e\) corruptions}
+
+#+begin_notes
+1:1 correspondence between interactive consensus conditions and ECCs
+#+end_notes
+
+** *2.*
+
+[ \( C \) \( \implies \) consensus despite $f_c$ crashes ]
+
+\( \Updownarrow \)
+
+\(C\)'s [[https://en.wikipedia.org/wiki/Hamming_distance][Hamming distance]] is \(f_c+1\)
+
+\\
+
+[ \( C \) \( \implies \) consensus despite $f_b$ Byzantine faults ]
+
+\( \Updownarrow \)
+
+\(C\)'s Hamming distance is \(2f_b+1\)
+
+#+begin_notes
+C = condition = ECC
+TODO what is the additional validity property
+#+end_notes
+
+** Implications
+
+Requirements that make an ECC valid \sim conditions needed to solve IC
+
+FLP \( \implies \) no perfect codes can tolerate erasure failures
+
+#+begin_notes
+rich field of ECCs \to Byzantine
+Byzantine, e.g. FLP (asynchronous consensus is impossible) → ECCs
+#+end_notes
+
+** Main Implication
+
+agreement problem & conditions
+
+\( \downarrow \)
+
+algorithm to solve problem
+
+
+* Technical details
+
+Form a graph of input vectors, \( G_{f_c,f_v}^C\):
+- Vertices are included iff they meet conditions
+- Vertices are neighbors iff their Hamming distance \(\leq 2f_v + f_c\)
+
+*Definition 3.1 & Theorem 3.4:* An agreement problem \( (C, f_c,f_v)\) can be solved iff \( \exists h : \) h is constant on every connected component of \( G_{f_c,f_v}^C \)
+
+/See 2.1 and 3. \(d(a, b)\) is the Hamming distance between \( a \) and \( b \). \( C \) are the conditions: The set of assumed possible input vectors./
+
+** Code
+
+[[./img/code.png]]
+
+
+* References
+#+print_bibliography:
