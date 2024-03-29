@@ -62,32 +62,35 @@ const createRect = (x, y, w, h, f) =>
 const sq = (x, y, fill) =>
 	createRect(x, y, 1, 1, fill)
 
-$(document).ready( () =>
-	$("[data-fingerprint-hash-algorithm]").replaceWith(function() {
-		let algorithm, colors, digits, fingerprint, g, j, l, n, rect, svg, title, x, y
-		svg = svgCreate("svg", {
-			"viewBox": "0 0 8 8",
-			"alt": this.innerHTML
-		})
-		g = svgCreate("g")
-		svg.appendChild(g)
-		title = svgCreate("title")
-		title.innerHTML = $(this).prop("title")
-		g.appendChild(title)
-		algorithm = $(this).data("fingerprint-hash-algorithm")
-		fingerprint = $(this).prop("title")
-		digits = convertBase(BASE_USED_BY[algorithm], 4, fingerprint)
-		colors = digits.map( d => {
-			return COLOR_MAP[d]
-		})
-		n = 0
-		for (y = j = 0; j <= 7; y = ++j) {
-			for (x = l = 0; l <= 7; x = ++l) {
-				rect = sq(x, y, colors[n])
-				g.appendChild(rect)
-				n++
-			}
-		}
-		return svg
+document.addEventListener('DOMContentLoaded', () => {
+	let key = document.querySelector("[data-fingerprint-hash-algorithm]")
+    if (key == null) {
+		return
+	}
+
+	let algorithm, colors, digits, fingerprint, g, j, l, n, rect, svg, title, x, y
+	svg = svgCreate("svg", {
+		"viewBox": "0 0 8 8",
+		"alt": this.innerHTML
 	})
-)
+	g = svgCreate("g")
+	svg.appendChild(g)
+	title = svgCreate("title")
+	title.innerHTML = key.attributes["title"]
+	g.appendChild(title)
+	algorithm = key.attributes["data-fingerprint-hash-algorithm"].value
+	fingerprint = key.attributes["title"].value
+	digits = convertBase(BASE_USED_BY[algorithm], 4, fingerprint)
+	colors = digits.map( d => {
+		return COLOR_MAP[d]
+	})
+	n = 0
+	for (y = j = 0; j <= 7; y = ++j) {
+		for (x = l = 0; l <= 7; x = ++l) {
+			rect = sq(x, y, colors[n])
+			g.appendChild(rect)
+			n++
+		}
+	}
+	key.replaceWith(svg)
+})

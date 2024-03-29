@@ -1,40 +1,36 @@
-const de_obfuscate = (_, email) =>
+const de_obfuscate = email =>
 	email.replace("...", "@").replace(/\.\.\./g, ".")
 
 const init = () => {
-	$(".eml").each(function() {
-		$(this).html(de_obfuscate)
-		if ($(this).attr("href")) {
-			return $(this).attr("href", de_obfuscate)
-		}
-	})
+	document.querySelectorAll('.eml').forEach( item =>
+		item.outerHTML = de_obfuscate(item.outerHTML)
+	)
 
-
-	$('body').on('click', 'a.instant', load_in_place)
-	$('body').on('click', 'header a.instant', load_in_place) // this is a mystery
+    document.querySelectorAll('a.instant').forEach( item =>
+		item.addEventListener('click', load_in_place)
+    )
 }
 
 
-const load_in_place = function() {
-	let href = $(this).attr('href');
-	$('main').load(href + ' main', (response, status, xhr) => {
-		if (status == 'success') {
-			// history.pushState(null, null, href)
-			window.location.href = href
-			$(init)
-		}
-	})
-	return false
+const load_in_place = function(event) {
+    let href = this.getAttribute('href')
+	fetch(href)
+		.then(event.preventDefault())
+		.then(response => response.text())
+        .then(html => {
+			const parser = new DOMParser()
+            return parser.parseFromString(html, 'text/html')
+			             .querySelector('main')
+        })
+		.then(main =>
+            // replace the current <main>'s content with the fetched content
+            document.querySelector('main').replaceWith(main)
+        )
+		.then(() => console.log("Loaded:", href))
+		.then(() => document.location = href)
+        .catch(error => {
+            console.warn('Failed to load content via JavaScript:', error)
+        })
 }
 
-$(window).bind('popstate', function() {
-	let href = location.pathname
-	$('main').load(href + ' main', (response, status, xhr) => {
-		if (status == 'success') {
-			$(init)
-		}
-	})
-})
-
-
-$(document).ready( init )
+document.addEventListener('DOMContentLoaded', init);
