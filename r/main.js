@@ -28,6 +28,7 @@ const load_in_place = function(event) {
         )
 		.then(() => console.log("Loaded:", href))
 		.then(() => history.pushState({}, "", href))
+		.then(init)
         .catch(error => {
             console.warn('Failed to load content via JavaScript:', error)
         })
