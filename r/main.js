@@ -27,10 +27,14 @@ const load_in_place = function(event) {
             document.querySelector('main').replaceWith(main)
         )
 		.then(() => console.log("Loaded:", href))
-		.then(() => document.location = href)
+		.then(() => history.pushState({}, "", href))
         .catch(error => {
             console.warn('Failed to load content via JavaScript:', error)
         })
 }
+
+addEventListener("popstate", function() {
+    window.location = location.pathname
+})
 
 document.addEventListener('DOMContentLoaded', init);
