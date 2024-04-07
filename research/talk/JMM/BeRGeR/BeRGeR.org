@@ -206,4 +206,17 @@ Prof. Darci Kracht, for advice on the presentation
 
 * Questions?
 
-zaz@zazbrown.com
+#+BEGIN_EXPORT HTML
+<pre>
+@inproceedings{BeRGeRJMM,
+  title={Using Braids for Byzantine Resistant Geographic Routing
+         on Polyhedral Networks},
+  author={Brown Zaz and Mikhail Nesterenko},
+  booktitle={Joint Mathematics Meet},
+  address={San Francisco, USA},
+  month={Jan},
+  year={2024},
+  url={https://zazbrown.com/research/talk/JMM/BeRGeR/BeRGeR.html}
+}
+</pre>
+#+END_EXPORT
