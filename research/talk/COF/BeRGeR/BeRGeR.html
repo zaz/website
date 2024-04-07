@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>BeRGeR</title>
+<meta name="author" content="Zaz Brown"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/serif.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">BeRGeR</h1><p class="subtitle">Using Braids for Byzantine-Resistant Geometric Routing on Polyhedral Networks</p>
+<h2 class="author">Zaz Brown</h2>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-org35c2150">Problem Definition</a></li>
+<li><a href="#/slide-org7cb1a63">Naïve approach</a></li>
+<li><a href="#/slide-org7ea520d">Generalized approach</a></li>
+<li><a href="#/slide-org474bfc9">Acknowledgements</a></li>
+<li><a href="#/slide-orgbbcc412">Questions?</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section>
+<section id="slide-org35c2150">
+<h2 id="org35c2150">Problem Definition</h2>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><b>Online routing</b></td>
+<td class="org-left">Nodes are <b>myopic</b> (only see immediate neighbors)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Robust routing on low-resource devices
+</p>
+
+<ul>
+<li>IoT</li>
+<li>Sensor networks</li>
+<li>Vehicular networks</li>
+
+</ul>
+
+<p>
+1 faulty &ldquo;Byzantine&rdquo; node
+</p>
+</section>
+<section id="slide-orgc9edea4">
+<h3 id="orgc9edea4">Using Braids for Byzantine-Resistant <b>Geometric Routing</b> on Polyhedral Networks</h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><b>Offline routing</b>               </td>
+<td class="org-left">Routing tables (nodes store directions)</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Geometric routing</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">    <b>Greedy routing</b></td>
+<td class="org-left">Go to node closest to destination</td>
+</tr>
+
+<tr>
+<td class="org-left">    <b>Face routing</b></td>
+<td class="org-left">Always turn right (or left)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="slide-orgb199948">
+<h3 id="orgb199948">Using Braids for <b>Byzantine-Resistant</b> Geometric Routing on Polyhedral Networks</h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><b>Byzantine node</b></td>
+<td class="org-left">Node that behaves arbitrarily</td>
+</tr>
+</tbody>
+</table>
+
+
+<div id="orga9c9871" class="figure">
+<p><img src="./img/Among Us crewmate.svg" alt="Among Us crewmate.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-orgfbfab94">
+<h3 id="orgfbfab94">Using Braids for Byzantine-Resistant Geometric Routing on <b>Polyhedral Networks</b></h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><b>Network</b></td>
+<td class="org-left">Graph</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Polyhedral</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">    <b>Planar</b></td>
+<td class="org-left">No edges intersect</td>
+</tr>
+
+<tr>
+<td class="org-left">    <b>3-Connected</b></td>
+<td class="org-left">To disconnect the network, you need to remove 3 nodes</td>
+</tr>
+
+<tr>
+<td class="org-left">    <b>3-Connected</b></td>
+<td class="org-left">\(\exists\) 3 disjoint paths between each pair of nodes</td>
+</tr>
+</tbody>
+</table>
+
+<aside class="notes">
+<p>
+<b>Planar</b> &because; &exist; algorithms to planarize; simplicity
+<b>3-connected</b> &because; it is necessary
+<b>Menger&rsquo;s theorem</b>: 3-connected equivalence
+</p>
+
+</aside>
+</section>
+<section id="slide-org1d31dc8">
+<h3 id="org1d31dc8">Using <b>Braids</b> for Byzantine-Resistant Geometric Routing on Polyhedral Networks</h3>
+<p>
+Exactly what they sound like.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org7cb1a63">
+<h2 id="org7cb1a63">Naïve approach</h2>
+<p>
+Route along 3 disjoint paths
+</p>
+
+<div>
+\begin{align*}
+\exists i,j \ : \ m_i &= m_j, \\
+                  p_i &\ \cap \ p_j = \emptyset
+\end{align*}
+
+</div>
+
+<p>
+For each node, find 2 disjoint paths that skip it.
+</p>
+
+<aside class="notes">
+<p>
+We <b>need</b> to use 3-connectivity.
+</p>
+
+</aside>
+</section>
+<section id="slide-orgeee4633" data-transition="fade">
+<h3 id="orgeee4633">Naïve approach</h3>
+
+<div id="org9296f89" class="figure">
+<p><img src="./img/network.svg" alt="network.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-org9797241" data-transition="fade">
+<h3 id="org9797241">Naïve approach</h3>
+
+<div id="org6542f38" class="figure">
+<p><img src="./img/3-disjoint.svg" alt="3-disjoint.svg" class="org-svg" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+<b>Hard</b> to do online.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org7ea520d">
+<h2 id="org7ea520d">Generalized approach</h2>
+<p>
+Route along <i>collectively</i> disjoint paths
+</p>
+
+<div>
+\begin{align*}
+\exists i,j,k,... \ : \ m_i &= m_j = m_k = \cdots, \\
+                  p_i &\ \cap \ p_j \ \cap \ p_k \ \cap \ \cdots = \emptyset
+\end{align*}
+
+</div>
+
+<p>
+For each node, find a set of collectively disjoint paths that skip it.
+</p>
+</section>
+<section id="slide-org7805765" data-transition="fade">
+<h3 id="org7805765">Remove edges that intersect st-line</h3>
+
+<div id="org6a70ddd" class="figure">
+<p><img src="./img/network.svg" alt="network.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-org17fd806" data-transition="fade">
+<h3 id="org17fd806">Remove edges that intersect st-line</h3>
+
+<div id="org6354393" class="figure">
+<p><img src="./img/remove-edges-that-intersect-st.svg" alt="remove-edges-that-intersect-st.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-orga5a0d63" data-transition="fade">
+<h3 id="orga5a0d63">Route along both sides</h3>
+
+<div id="orgbf38521" class="figure">
+<p><img src="./img/rhr-and-lhr.svg" alt="rhr-and-lhr.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-orga6bacf6" data-transition="fade">
+<h3 id="orga6bacf6">Proof</h3>
+
+<div id="orgad0e9ec" class="figure">
+<p><img src="./img/dual-graph.svg" alt="dual-graph.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-orge99a894" data-transition="fade">
+<h3 id="orge99a894">Proof</h3>
+
+<div id="orgb2868e2" class="figure">
+<p><img src="./img/dual-graph-edge-contraction.svg" alt="dual-graph-edge-contraction.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-org2555960" data-transition="fade">
+<h3 id="org2555960">Route along both sides</h3>
+
+<div id="org85a407d" class="figure">
+<p><img src="./img/rhr-and-lhr.svg" alt="rhr-and-lhr.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-org715c47d" data-transition="fade">
+<h3 id="org715c47d">Counterexample</h3>
+
+<div id="org11b9a72" class="figure">
+<p><img src="./img/counterexample.svg" alt="counterexample.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-orgb496e6a" data-transition="fade">
+<h3 id="orgb496e6a">Counterexample</h3>
+
+<div id="org8f26374" class="figure">
+<p><img src="./img/counterexample-faded.svg" alt="counterexample-faded.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-org0761dc7" data-transition="fade">
+<h3 id="org0761dc7">Route along both sides</h3>
+
+<div id="org9ca488b" class="figure">
+<p><img src="./img/rhr-and-lhr.svg" alt="rhr-and-lhr.svg" class="org-svg" />
+</p>
+</div>
+</section>
+<section id="slide-org19156f0" data-transition="fade">
+<h3 id="org19156f0">Braids</h3>
+
+<div id="org2cc1e06" class="figure">
+<p><img src="./img/rhr-and-lhr-and-braids.svg" alt="rhr-and-lhr-and-braids.svg" class="org-svg" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org474bfc9">
+<h2 id="org474bfc9">Acknowledgements</h2>
+<p>
+Prof. Mikhail Nesterenko, for supervising the research
+</p>
+
+<p>
+Prof. Gokarna Sharma, for his feedback
+</p>
+
+<p>
+Prof. Jenya Soprunova, for her feedback
+</p>
+
+<p>
+Prof. Darci Kracht, for advice on the presentation
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgbbcc412">
+<h2 id="orgbbcc412">Questions?</h2>
+<p>
+zaz@zazbrown.com
+</p>
+
+<p>
+zazbrown.com/research
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+
+</script>
+</body>
+</html>
