@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Fast Conservative GC</title>
+<meta name="author" content="Zaz Brown"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/serif.css" id="theme"/>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Fast Conservative GC</h1><p class="subtitle"></p>
+<h2 class="author">Zaz Brown</h2>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-org8b4b2d8">Exact vs Conservative</a></li>
+<li><a href="#/slide-orgc2bb2de">Exact GC Disadvantages</a></li>
+<li><a href="#/slide-orgf060bf7">Conservative GC Disadvantages</a></li>
+<li><a href="#/slide-org9aa6511">Immix Advantage</a></li>
+<li><a href="#/slide-org6586eff">Performance Robustness</a></li>
+<li><a href="#/slide-orge20f375"><span style="display:inline-block">Why not use</span> <span style="display:inline-block">conservative GC?</span></a></li>
+<li><a href="#/slide-orga419c60">Questions</a></li>
+<li><a href="#/slide-org212f104">References</a></li>
+</ul>
+</div>
+</div>
+</section>
+<p>
+<style>.reveal .slide-number {
+  font-size: 24pt;
+  top: 8px;
+  left: 8px;
+  right: auto;
+  bottom: auto;
+  color: inherit;
+  background-color: transparent;
+}
+.reveal .slide-number .slide-number-delimiter {
+  margin: 0 -0.5rem;
+}</style> 
+</p>
+<section>
+<section id="slide-org8b4b2d8" data-transition="fade">
+<h2 id="org8b4b2d8">Exact vs Conservative</h2>
+<p>
+recognizes   vs   guesses pointers                 
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgc2bb2de">
+<h2 id="orgc2bb2de">Exact GC Disadvantages</h2>
+<p>
+difficult to implement
+</p>
+
+<p>
+prevents code motion
+</p>
+<aside class="notes">
+<p>
+like type systems; hard
+</p>
+
+<p>
+exact GC requires stack maps; difficult engineering
+</p>
+
+<p>
+compiler opt. such as code motion
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgf060bf7">
+<h2 id="orgf060bf7">Conservative GC Disadvantages</h2>
+<p>
+guesses pointers
+</p>
+
+<ul>
+<li>int could be ptr: excess retention  <span class="fragment" data-fragment-index="0">  0.01%</span></li>
+
+<li>ptr could be int: pin referent  <span class="fragment" data-fragment-index="0">  0.03%</span></li>
+
+</ul>
+
+<aside class="notes">
+<p>
+no surprise that these restrictions slow things down
+</p>
+
+<p>
+BUT actually only 0.01% &amp; 0.03%
+</p>
+
+</aside>
+</section>
+<section id="slide-org9a447dc" data-transition="fade">
+<h3 id="org9a447dc"><i>was</i> slow</h3>
+
+<div id="org74ef975" class="figure">
+<p><img src="./img/performance vs Gen Immix without RC Immix.svg" alt="performance vs Gen Immix without RC Immix.svg" class="org-svg" width="100%" />
+</p>
+</div>
+<aside class="notes">
+<p>
+exact semi-space
+</p>
+
+<p>
+conservative mostly-copying collection
+</p>
+
+<p>
+exact mark &amp; sweep
+</p>
+
+<p>
+conservative Boehm, Demers, Weiser
+</p>
+
+</aside>
+</section>
+<section id="slide-org6ed545b" data-transition="fade">
+<h3 id="org6ed545b"><i>now</i> fast</h3>
+
+<div id="org5ea1db8" class="figure">
+<p><img src="./img/performance vs Gen Immix without RC Immix_cons.svg" alt="performance vs Gen Immix without RC Immix_cons.svg" class="org-svg" width="100%" />
+</p>
+</div>
+</section>
+<section id="slide-orgc7786cf" data-transition="fade">
+<h3 id="orgc7786cf"><i>now</i> fast</h3>
+
+<div id="orgff40581" class="figure">
+<p><img src="./img/performance vs Gen Immix.svg" alt="performance vs Gen Immix.svg" class="org-svg" width="100%" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org9aa6511">
+<h2 id="org9aa6511">Immix Advantage</h2>
+<p>
+MCC pins 4 KiB pages, BDW uses free-list
+</p>
+
+<p>
+Immix pins 256B lines, uses bump pointer
+</p>
+
+<p>
+improves fragmentation &amp; mutator locality
+</p>
+<aside class="notes">
+<p>
+<i>this</i> is what leads to performance advantage: heap organization
+</p>
+
+<p>
+<b>not</b> excess retention and pinning
+</p>
+
+</aside>
+</section>
+<section id="slide-orgb8ac37f">
+<h3 id="orgb8ac37f">RC Immix</h3>
+
+<div id="org5081948" class="figure">
+<p><img src="./img/header bits.svg" alt="header bits.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+Immix + live object count
+</p>
+
+<p>
+tracing + counting
+</p>
+
+<aside class="notes">
+<p>
+figure from Rifat&rsquo;s PhD thesis
+</p>
+
+<p>
+behaves like tracing collector for young obj
+</p>
+
+<p>
+behaves like a ref counting collector for mature obj
+</p>
+
+</aside>
+</section>
+<section id="slide-org61db02f">
+<h3 id="org61db02f">RC Immix<sub>cons</sub> filtering</h3>
+<p>
+bitmap to determine valid objects
+</p>
+<ul>
+<li>collector clears bit for dead object</li>
+<li>ambiguous references are checked against bitmap</li>
+
+</ul>
+
+<aside class="notes">
+<p>
+MCC pinned obj / live: 2%
+</p>
+
+<p>
+Immix pinned obj / live: 0.2%
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-org6586eff">
+<h2 id="org6586eff">Performance Robustness</h2>
+
+<div id="orgc677d5c" class="figure">
+<p><img src="./img/performance vs Gen Immix.svg" alt="performance vs Gen Immix.svg" class="org-svg" width="100%" />
+</p>
+</div>
+</section>
+<section id="slide-org9250076">
+<h3 id="org9250076">Time vs Heap Size</h3>
+
+<div id="org75ea07d" class="figure">
+<p><img src="./img/total time vs heap size.svg" alt="total time vs heap size.svg" class="org-svg" width="100%" />
+</p>
+</div>
+<aside class="notes">
+<p>
+MCC pinned obj / live: 2%
+</p>
+
+<p>
+Immix pinned obj / live: 0.2%
+</p>
+
+</aside>
+</section>
+<section id="slide-orgca259b5">
+<h3 id="orgca259b5">Increased Pinning</h3>
+
+<div id="orgdd54f59" class="figure">
+<p><img src="./img/increased pinning.svg" alt="increased pinning.svg" class="org-svg" width="100%" />
+</p>
+</div>
+</section>
+<section id="slide-org700eb12">
+<h3 id="org700eb12">Java</h3>
+<p>
+Jikes RVM &amp; MMTk
+</p>
+
+<p>
+<b>simulated:</b>
+</p>
+
+<ul>
+<li>poor code quality by disabling optimizations</li>
+<li>immature VM by deoptimising runtime code</li>
+
+</ul>
+<aside class="notes">
+<p>
+should give an idea how it would work for other languages
+</p>
+
+<p>
+seems to work well
+</p>
+
+<p>
+RC Immix<sub>cons</sub> \(\approx\) Immix<sub>cons</sub>
+</p>
+
+<p>
+\(\implies\) RC mature objects not helpful until VM and code quality are well-optimized
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orge20f375">
+<h2 id="orge20f375"><span style="display:inline-block">Why not use</span> <span style="display:inline-block">conservative GC?</span></h2>
+<aside class="notes">
+<p>
+That concludes my presentation
+</p>
+
+<p>
+&#x2026; now that it&rsquo;s as performant as exact GC
+</p>
+
+<ol>
+<li>can&rsquo;t handle pointer arithmetic (e.g. XOR linked lists don&rsquo;t appear to be pointers)</li>
+<li>worst case could be really bad (DoS attack potential?)</li>
+
+<li>minimum heap size is slightly larger</li>
+
+</ol>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orga419c60">
+<h2 id="orga419c60">Questions</h2>
+<p>
+<a href="https://zazbrown.com/research/talk/Cam/FCGC/FCGC.html">zazbrown.com/research/talk</a>
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org212f104">
+<h2 id="org212f104">References</h2>
+<p>
+<a href="https://doi.org/10.1145/2714064.2660198">Fast Conservative Garbage Collection, 2014</a>
+</p>
+
+<p>
+<a href="https://rifatshahriyar.github.io/files/others/Thesis_Rifat_Shahriyar.pdf">High Performance Reference Counting and Conservative Garbage Collection, 2015</a> - PhD thesis
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+slideNumber:true
+});
+
+</script>
+</body>
+</html>

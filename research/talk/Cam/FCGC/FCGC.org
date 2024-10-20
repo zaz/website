@@ -1,0 +1,184 @@
+#+MACRO: f @@html: <span class="fragment" data-fragment-index="$2">$1</span>@@
+#+reveal_reveal_js_version: 4
+#+reveal_theme: serif
+#+reveal_init_options: slideNumber:true
+#+options: timestamp:nil toc:1 num:nil
+#+bibliography: ../bib/bib.bib
+#+title: Fast Conservative GC
+
+@@html:<style>.reveal .slide-number {
+  font-size: 24pt;
+  top: 8px;
+  left: 8px;
+  right: auto;
+  bottom: auto;
+  color: inherit;
+  background-color: transparent;
+}
+.reveal .slide-number .slide-number-delimiter {
+  margin: 0 -0.5rem;
+}</style> @@
+
+* Exact vs Conservative
+:PROPERTIES:
+:reveal_extra_attr: data-transition="fade"
+:END:
+
+recognizes   vs   guesses pointers                 
+
+
+* Exact GC Disadvantages
+difficult to implement
+
+prevents code motion
+#+begin_notes
+like type systems; hard
+
+exact GC requires stack maps; difficult engineering
+
+compiler opt. such as code motion
+#+end_notes
+
+* Conservative GC Disadvantages
+guesses pointers
+
+- int could be ptr: excess retention {{{f(  0.01%,0)}}}
+
+- ptr could be int: pin referent {{{f(  0.03%,0)}}}
+
+#+begin_notes
+no surprise that these restrictions slow things down
+
+BUT actually only 0.01% & 0.03%
+#+end_notes
+
+** /was/ slow
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+#+attr_html: :width 100%
+[[./img/performance vs Gen Immix without RC Immix.svg]]
+#+begin_notes
+exact semi-space
+
+conservative mostly-copying collection
+
+exact mark & sweep
+
+conservative Boehm, Demers, Weiser
+#+end_notes
+
+** /now/ fast
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+#+attr_html: :width 100%
+[[./img/performance vs Gen Immix without RC Immix_cons.svg]]
+
+** /now/ fast
+:PROPERTIES:
+:REVEAL_DATA_TRANSITION: fade
+:END:
+#+attr_html: :width 100%
+[[./img/performance vs Gen Immix.svg]]
+
+* Immix Advantage
+MCC pins 4 KiB pages, BDW uses free-list
+
+Immix pins 256B lines, uses bump pointer
+
+improves fragmentation & mutator locality
+#+begin_notes
+/this/ is what leads to performance advantage: heap organization
+
+*not* excess retention and pinning
+#+end_notes
+
+** RC Immix
+
+[[./img/header bits.svg]]
+
+Immix + live object count
+
+tracing + counting
+
+#+begin_notes
+figure from Rifat's PhD thesis
+
+behaves like tracing collector for young obj
+
+behaves like a ref counting collector for mature obj
+#+end_notes
+
+** RC Immix_{cons} filtering
+
+bitmap to determine valid objects
+- collector clears bit for dead object
+- ambiguous references are checked against bitmap
+
+#+begin_notes
+MCC pinned obj / live: 2%
+
+Immix pinned obj / live: 0.2%
+#+end_notes
+
+* Performance Robustness
+
+#+attr_html: :width 100%
+[[./img/performance vs Gen Immix.svg]]
+
+** Time vs Heap Size
+
+#+attr_html: :width 100%
+[[./img/total time vs heap size.svg]]
+#+begin_notes
+MCC pinned obj / live: 2%
+
+Immix pinned obj / live: 0.2%
+#+end_notes
+
+** Increased Pinning
+
+#+attr_html: :width 100%
+[[./img/increased pinning.svg]]
+
+** Java
+
+Jikes RVM & MMTk
+
+*simulated:*
+
+- poor code quality by disabling optimizations
+- immature VM by deoptimising runtime code
+#+begin_notes
+should give an idea how it would work for other languages
+
+seems to work well
+
+RC Immix_{cons} \(\approx\) Immix_{cons}
+
+\(\implies\) RC mature objects not helpful until VM and code quality are well-optimized
+#+end_notes
+
+* @@html:<span style="display:inline-block">Why not use</span> <span style="display:inline-block">conservative GC?</span>@@
+
+#+begin_notes
+That concludes my presentation
+
+... now that it's as performant as exact GC
+
+1. can't handle pointer arithmetic (e.g. XOR linked lists don't appear to be pointers)
+2. worst case could be really bad (DoS attack potential?)
+
+3. minimum heap size is slightly larger
+#+end_notes
+
+* Questions
+
+[[https://zazbrown.com/research/talk/Cam/FCGC/FCGC.html][zazbrown.com/research/talk]]
+
+* References
+
+[[https://doi.org/10.1145/2714064.2660198][Fast Conservative Garbage Collection, 2014]]
+
+[[https://rifatshahriyar.github.io/files/others/Thesis_Rifat_Shahriyar.pdf][High Performance Reference Counting and Conservative Garbage Collection, 2015]] - PhD thesis
