@@ -26,11 +26,19 @@
 
 recognizes   vs   guesses pointers                 
 
+#+begin_notes
+goal of GC: determine objects that won't be used again - undecidable
+
+exact GC: underapprox by cleaning unreachable objects
+
+conservative: more underapprox
+#+end_notes
 
 * Exact GC Disadvantages
 difficult to implement
 
 prevents code motion
+
 #+begin_notes
 like type systems; hard
 
@@ -49,7 +57,9 @@ guesses pointers
 #+begin_notes
 no surprise that these restrictions slow things down
 
-BUT actually only 0.01% & 0.03%
+BUT actually this paper shows only 0.01% & 0.03%
+
+so what is slowing things down??
 #+end_notes
 
 ** /was/ slow
@@ -66,9 +76,11 @@ conservative mostly-copying collection
 exact mark & sweep
 
 conservative Boehm, Demers, Weiser
+
+12% slowdown - showstopper
 #+end_notes
 
-** /now/ fast
+** /was/ slow
 :PROPERTIES:
 :REVEAL_DATA_TRANSITION: fade
 :END:
@@ -82,6 +94,10 @@ conservative Boehm, Demers, Weiser
 #+attr_html: :width 100%
 [[./img/performance vs Gen Immix.svg]]
 
+#+begin_notes
+why is building a conservative GC on Immix so fast?? ...
+#+end_notes
+
 * Immix Advantage
 MCC pins 4 KiB pages, BDW uses free-list
 
@@ -92,6 +108,8 @@ improves fragmentation & mutator locality
 /this/ is what leads to performance advantage: heap organization
 
 *not* excess retention and pinning
+
+how did they build RC Immix_{cons}? ...
 #+end_notes
 
 ** RC Immix
@@ -100,7 +118,7 @@ improves fragmentation & mutator locality
 
 Immix + live object count
 
-tracing + counting
+combines tracing & counting
 
 #+begin_notes
 figure from Rifat's PhD thesis
@@ -108,6 +126,8 @@ figure from Rifat's PhD thesis
 behaves like tracing collector for young obj
 
 behaves like a ref counting collector for mature obj
+
+as Michael mentions: no strict delineation, highly optimized GCs combine both
 #+end_notes
 
 ** RC Immix_{cons} filtering
@@ -116,7 +136,13 @@ bitmap to determine valid objects
 - collector clears bit for dead object
 - ambiguous references are checked against bitmap
 
+ 
+
+10× reduction in pinned objects vs MCC
+
 #+begin_notes
+because of the granularity of Immix:
+
 MCC pinned obj / live: 2%
 
 Immix pinned obj / live: 0.2%
@@ -127,20 +153,11 @@ Immix pinned obj / live: 0.2%
 #+attr_html: :width 100%
 [[./img/performance vs Gen Immix.svg]]
 
-** Time vs Heap Size
-
-#+attr_html: :width 100%
-[[./img/total time vs heap size.svg]]
 #+begin_notes
-MCC pinned obj / live: 2%
+... but under what assumptions?
 
-Immix pinned obj / live: 0.2%
+how well does performance generalize?
 #+end_notes
-
-** Increased Pinning
-
-#+attr_html: :width 100%
-[[./img/increased pinning.svg]]
 
 ** Java
 
@@ -155,9 +172,28 @@ should give an idea how it would work for other languages
 
 seems to work well
 
-RC Immix_{cons} \(\approx\) Immix_{cons}
+RC Immix_{cons} ≈ Immix_{cons}
 
-\(\implies\) RC mature objects not helpful until VM and code quality are well-optimized
+⇒ RC mature objects not helpful until VM and code quality are well-optimized
+#+end_notes
+
+** Time vs Heap Size
+
+#+attr_html: :width 100%
+[[./img/total time vs heap size.svg]]
+#+begin_notes
+at very small heap sizes, slight Gen Immix advantage vs RC Immix_{cons}
+#+end_notes
+
+** Increased Pinning
+
+#+attr_html: :width 100%
+[[./img/increased pinning.svg]]
+
+#+begin_notes
+artificially increased number of pinned objects
+
+32× pinning ⇒ 11% performance hit
 #+end_notes
 
 * @@html:<span style="display:inline-block">Why not use</span> <span style="display:inline-block">conservative GC?</span>@@
@@ -165,7 +201,10 @@ RC Immix_{cons} \(\approx\) Immix_{cons}
 #+begin_notes
 That concludes my presentation
 
-... now that it's as performant as exact GC
+Why not conservative GC?
+- exact GC already underapprox
+- conservative tiny bit more underapprox
+- conservative as performant as exact GC
 
 1. can't handle pointer arithmetic (e.g. XOR linked lists don't appear to be pointers)
 2. worst case could be really bad (DoS attack potential?)
@@ -173,7 +212,7 @@ That concludes my presentation
 3. minimum heap size is slightly larger
 #+end_notes
 
-* Questions
+* Questions?
 
 [[https://zazbrown.com/research/talk/Cam/FCGC/FCGC.html][zazbrown.com/research/talk]]
 
