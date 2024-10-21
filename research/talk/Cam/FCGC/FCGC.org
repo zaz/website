@@ -206,10 +206,10 @@ Why not conservative GC?
 - conservative tiny bit more underapprox
 - conservative as performant as exact GC
 
+Answers:
 1. can't handle pointer arithmetic (e.g. XOR linked lists don't appear to be pointers)
 2. worst case could be really bad (DoS attack potential?)
-
-3. minimum heap size is slightly larger
+3. +minimum heap size is slightly larger+
 #+end_notes
 
 * Questions?
