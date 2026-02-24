@@ -1,0 +1,3 @@
+[submodule "entropy_diagnostics"]
+	path = entropy_diagnostics
+	url = https://gitlab.com/zaz/entropy_diagnostics
