@@ -148,6 +148,7 @@ nav li h2 {
 nav li div {
 	background-color: var(--main-color);
 	padding: 0.5rem;
+	margin-top: 1.4rem;
 }
 
 nav li div,
@@ -162,7 +163,7 @@ nav li h2:after {
 	top: 0;
 	left: 50%;
 	/* -0.25 to fix alignment error due to width */
-	margin: 2.7rem -0.25rem;
+	margin: 4.1rem -0.25rem;
 	width: 0;
 	/* add 0.05rem overlap so rendering error will not cause separation */
 	border-bottom: 0.35rem solid var(--main-color);
