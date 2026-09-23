@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | escape }} | Zaz Brown</title>
+  {% if page.description %}<meta name="description" content="{{ page.description | escape }}">{% endif %}
+  {% if page.citation_author %}
+  <meta name="citation_title" content="{{ page.title | escape }}">
+  <meta name="citation_author" content="{{ page.citation_author | escape }}">
+  <meta name="citation_publication_date" content="{{ page.citation_year }}">
+  <meta name="citation_pdf_url" content="{{ page.citation_pdf | escape }}">
+  {% endif %}
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/r/main.css">
+</head>
+<body>
+  <main class="article">
+    <header>
+      <h2><a href="/">Zaz Brown</a></h2>
+      <h1>{{ page.title }}</h1>
+      {% if page.author %}<p>{{ page.author }} · {{ page.date_label }}</p>{% endif %}
+    </header>
+    <article>
+      {{ content }}
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="687" height="520" viewBox="-232 -307 687 520" role="img" aria-labelledby="title description">
+  <title id="title">A nonconvex body</title>
+  <desc id="description">The same outline and broad bottom-left rounding, with an inward curved notch in the upper-right side. An arrow labeled “not convex” points into the gap. No planks or dimension markers are shown.</desc>
+  <defs>
+    <marker id="annotation-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M 2 2 L 10 6 L 2 10" fill="none" stroke="#333333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <path transform="rotate(12)" d="M 318.573333 32.64 Q 388.333333 0 328.813333 -24.48 L 268.698133 -49.2048 C 240.953159 -60.61604 155.518247 -3.846056 111.126288 -22.104039 C 66.734329 -40.362022 45.963108 -140.81356 18.218133 -152.2248 L -172.146667 -230.52 Q -231.666667 -255 -218.466667 -165.24 L -179.166667 102 Q -156.666667 255 55.883333 155.55 L 318.573333 32.64 Z" fill="none" stroke="#111111" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="M 232 -140 C 195 -123 166 -85 136.996134 -33.189168" fill="none" stroke="#333333" stroke-width="1.8" stroke-linecap="round" marker-end="url(#annotation-arrow)"/>
+  <text x="235" y="-155" font-family="Latin Modern Roman, Computer Modern, serif" font-size="34" font-weight="400" fill="#111111">not convex</text>
+</svg>

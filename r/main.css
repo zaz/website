@@ -191,3 +191,35 @@ nav div {
 nav li:hover h2 {
 	padding: 0.7rem 0;
 }
+
+main.article {
+	display: block;
+	height: auto;
+	max-width: 48rem;
+	margin: 2rem auto;
+	padding: 0 1rem 3rem;
+	text-align: left;
+}
+
+.article h1 {
+	font-size: clamp(2rem, 6vw, 5rem);
+}
+
+.article article a {
+	text-decoration: underline;
+}
+
+.article figure {
+	margin: 2rem 0;
+	text-align: center;
+}
+
+.article figure img {
+	max-width: min(100%, 32rem);
+}
+
+@media (prefers-color-scheme: dark) {
+	.article figure img {
+		filter: invert(1) hue-rotate(180deg);
+	}
+}

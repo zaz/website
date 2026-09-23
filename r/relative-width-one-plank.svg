@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1149" height="700" viewBox="-504 -375 1149 700" role="img">
+  <defs>
+    <!-- The body is an asymmetric triangle with three unequally rounded
+         corners, made by quadratic Bezier curves lying inside the triangle.
+         The bottom-left rounding extends 3.75 times farther along its sides.
+         Purple stays at a 12-degree downward slope on the page. -->
+    <path id="body" d="M 318.573333 32.64 Q 388.333333 0 328.813333 -24.48 L -172.146667 -230.52 Q -231.666667 -255 -218.466667 -165.24 L -179.166667 102 Q -156.666667 255 55.883333 155.55 L 318.573333 32.64 Z"/>
+    <!-- purple: body width 430.492987, plank width 172.197195 = 40%. -->
+    <linearGradient id="purple-opacity" gradientUnits="userSpaceOnUse" x1="-346" y1="0" x2="482" y2="0">
+      <stop offset="0" stop-color="white" stop-opacity="0"/>
+      <stop offset="0.108696" stop-color="white" stop-opacity="1"/>
+      <stop offset="0.891304" stop-color="white" stop-opacity="1"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="purple-fade" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-349" y="-90.098597" width="834" height="180.197195" style="mask-type:alpha">
+      <rect x="-349" y="-90.098597" width="834" height="180.197195" fill="url(#purple-opacity)"/>
+    </mask>
+  </defs>
+  <g transform="rotate(12)" style="isolation:isolate">
+    <g fill="none" stroke="#AAAAAA" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="1 8">
+      <path transform="rotate(0)" d="M -346 -235.765714 H 502 M -346 194.727273 H 502"/>
+    </g>
+    <!-- Each shared opacity mask fades the fill and both borders equally.
+         Pale purple/green follow the logo; blending follows the triangle paper. -->
+    <g transform="rotate(0)" style="mix-blend-mode:multiply">
+      <g mask="url(#purple-fade)">
+        <rect x="-346" y="-86.098597" width="828" height="172.197195" fill="#DBDBFF"/>
+        <path d="M -346 -86.098597 H 482 M -346 86.098597 H 482" fill="none" stroke="#0000A6" stroke-width="2"/>
+      </g>
+    </g>
+    <use href="#body" fill="none" stroke="#111111" stroke-width="2.6" stroke-linejoin="round"/>
+    <!-- Only the inner dimension marker carries a percentage. -->
+    <g transform="rotate(0)">
+      <path d="M 482 -235.765714 V 194.727273 M 470 -235.765714 H 494 M 470 194.727273 H 494"
+            fill="none" stroke="#333333" stroke-width="2" stroke-linecap="butt"/>
+      <path d="M 482 -86.098597 V 86.098597 M 470 -86.098597 H 494 M 470 86.098597 H 494"
+            fill="none" stroke="#0000A6" stroke-width="3" stroke-linecap="butt"/>
+      <text x="508" y="14"
+            font-family="Latin Modern Roman, Computer Modern, serif" font-size="42" font-weight="400" fill="#0000A6">40%</text>
+    </g>
+  </g>
+</svg>

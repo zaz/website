@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1149" height="1070" viewBox="-504 -560 1149 1070" role="img" aria-labelledby="title description">
+  <title id="title">Three planks covering a convex body with total relative width 116%</title>
+  <desc id="description">Three nonparallel planks cover an asymmetric convex body with rounded corners and flat sides, with a broad curve at the bottom-left corner. Purple, green, and red fills use multiply blending. Flat-ended dimension markers compare each plank with the body's width in the same direction. The only visible labels are 40%, 39%, and 37%, totaling 116%. Each fill and its borders share one gradual fade, ending at zero opacity on the dimension axis. Dotted supporting lines extend to the matching fade endpoint on the opposite side.</desc>
+  <defs>
+    <!-- The body is an asymmetric triangle with three unequally rounded
+         corners, made by quadratic Bezier curves lying inside the triangle.
+         The bottom-left rounding extends 3.75 times farther along its sides.
+         Purple stays at a 12-degree downward slope on the page. -->
+    <path id="body" d="M 318.573333 32.64 Q 388.333333 0 328.813333 -24.48 L -172.146667 -230.52 Q -231.666667 -255 -218.466667 -165.24 L -179.166667 102 Q -156.666667 255 55.883333 155.55 L 318.573333 32.64 Z"/>
+    <!-- Construction and verification:
+         Each plank contains the corresponding one-third-width median
+         strip of the enclosing triangle, so together they cover the body.
+         Extrema of the quadratic curves determine each body width.
+         Colored widths are set to 40%, 39%, and 37% of those body widths.
+         All boundary intervals between strip crossings were checked;
+         all three planks and the body share the origin.
+         The parent triangle has vertices (388.333333,0),
+         (-231.666667,-255), and (-156.666667,255). At these corners,
+         entry trim fractions are (0.128,0.096,0.300), and exit trim
+         fractions are (0.096,0.176,0.390). -->
+    <!-- purple: body width 430.492987, plank width 172.197195 = 40%. -->
+    <linearGradient id="purple-opacity" gradientUnits="userSpaceOnUse" x1="-346" y1="0" x2="482" y2="0">
+      <stop offset="0" stop-color="white" stop-opacity="0"/>
+      <stop offset="0.108696" stop-color="white" stop-opacity="1"/>
+      <stop offset="0.891304" stop-color="white" stop-opacity="1"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="purple-fade" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-349" y="-90.098597" width="834" height="180.197195" style="mask-type:alpha">
+      <rect x="-349" y="-90.098597" width="834" height="180.197195" fill="url(#purple-opacity)"/>
+    </mask>
+    <!-- green: body width 492.512893, plank width 192.080028 = 39%. -->
+    <linearGradient id="green-opacity" gradientUnits="userSpaceOnUse" x1="-370" y1="0" x2="437" y2="0">
+      <stop offset="0" stop-color="white" stop-opacity="0"/>
+      <stop offset="0.111524" stop-color="white" stop-opacity="1"/>
+      <stop offset="0.888476" stop-color="white" stop-opacity="1"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="green-fade" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-373" y="-100.040014" width="813" height="200.080028" style="mask-type:alpha">
+      <rect x="-373" y="-100.040014" width="813" height="200.080028" fill="url(#green-opacity)"/>
+    </mask>
+    <!-- red: body width 605.957178, plank width 224.204156 = 37%. -->
+    <linearGradient id="red-opacity" gradientUnits="userSpaceOnUse" x1="-320" y1="0" x2="351" y2="0">
+      <stop offset="0" stop-color="white" stop-opacity="0"/>
+      <stop offset="0.134128" stop-color="white" stop-opacity="1"/>
+      <stop offset="0.865872" stop-color="white" stop-opacity="1"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <mask id="red-fade" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-323" y="-116.102078" width="677" height="232.204156" style="mask-type:alpha">
+      <rect x="-323" y="-116.102078" width="677" height="232.204156" fill="url(#red-opacity)"/>
+    </mask>
+  </defs>
+  <g transform="rotate(12)" style="isolation:isolate">
+    <g fill="none" stroke="#AAAAAA" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="1 8">
+      <path transform="rotate(0)" d="M -346 -235.765714 H 502 M -346 194.727273 H 502"/>
+      <path transform="rotate(-132.255044)" d="M -370 -225.152235 H 457 M -370 267.360658 H 457"/>
+      <path transform="rotate(121.565696)" d="M -320 -305.464473 H 371 M -320 300.492705 H 371"/>
+    </g>
+    <!-- Each shared opacity mask fades the fill and both borders equally.
+         Pale purple/green follow the logo; blending follows the triangle paper. -->
+    <g transform="rotate(0)" style="mix-blend-mode:multiply">
+      <g mask="url(#purple-fade)">
+        <rect x="-346" y="-86.098597" width="828" height="172.197195" fill="#DBDBFF"/>
+        <path d="M -346 -86.098597 H 482 M -346 86.098597 H 482" fill="none" stroke="#0000A6" stroke-width="2"/>
+      </g>
+    </g>
+    <g transform="rotate(-132.255044)" style="mix-blend-mode:multiply">
+      <g mask="url(#green-fade)">
+        <rect x="-370" y="-96.040014" width="807" height="192.080028" fill="#E0FFE0"/>
+        <path d="M -370 -96.040014 H 437 M -370 96.040014 H 437" fill="none" stroke="#007300" stroke-width="2"/>
+      </g>
+    </g>
+    <g transform="rotate(121.565696)" style="mix-blend-mode:multiply">
+      <g mask="url(#red-fade)">
+        <rect x="-320" y="-112.102078" width="671" height="224.204156" fill="#FFDDE1"/>
+        <path d="M -320 -112.102078 H 351 M -320 112.102078 H 351" fill="none" stroke="#A62133" stroke-width="2"/>
+      </g>
+    </g>
+    <use href="#body" fill="none" stroke="#111111" stroke-width="2.6" stroke-linejoin="round"/>
+    <!-- Only the inner dimension marker carries a percentage. -->
+    <g transform="rotate(0)">
+      <path d="M 482 -235.765714 V 194.727273 M 470 -235.765714 H 494 M 470 194.727273 H 494"
+            fill="none" stroke="#333333" stroke-width="2" stroke-linecap="butt"/>
+      <path d="M 482 -86.098597 V 86.098597 M 470 -86.098597 H 494 M 470 86.098597 H 494"
+            fill="none" stroke="#0000A6" stroke-width="3" stroke-linecap="butt"/>
+      <text x="508" y="14"
+            font-family="Latin Modern Roman, Computer Modern, serif" font-size="42" font-weight="400" fill="#0000A6">40%</text>
+    </g>
+    <g transform="rotate(-132.255044)">
+      <path d="M 437 -225.152235 V 267.360658 M 425 -225.152235 H 449 M 425 267.360658 H 449"
+            fill="none" stroke="#333333" stroke-width="2" stroke-linecap="butt"/>
+      <path d="M 437 -96.040014 V 96.040014 M 425 -96.040014 H 449 M 425 96.040014 H 449"
+            fill="none" stroke="#007300" stroke-width="3" stroke-linecap="butt"/>
+      <text x="463" y="-14" transform="rotate(180 463 -14)" text-anchor="end"
+            font-family="Latin Modern Roman, Computer Modern, serif" font-size="42" font-weight="400" fill="#007300">39%</text>
+    </g>
+    <g transform="rotate(121.565696)">
+      <path d="M 351 -305.464473 V 300.492705 M 339 -305.464473 H 363 M 339 300.492705 H 363"
+            fill="none" stroke="#333333" stroke-width="2" stroke-linecap="butt"/>
+      <path d="M 351 -112.102078 V 112.102078 M 339 -112.102078 H 363 M 339 112.102078 H 363"
+            fill="none" stroke="#A62133" stroke-width="3" stroke-linecap="butt"/>
+      <text x="377" y="-14" transform="rotate(180 377 -14)" text-anchor="end"
+            font-family="Latin Modern Roman, Computer Modern, serif" font-size="42" font-weight="400" fill="#A62133">37%</text>
+    </g>
+  </g>
+</svg>

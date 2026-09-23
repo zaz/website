@@ -1,0 +1,55 @@
+---
+layout: article
+title: The Affine Plank Conjecture
+description: An illustrated explanation of relative plank widths, an interactive visualization, and proofs for three planks.
+---
+<p>The Affine Plank Conjecture concerns planks covering convex bodies.</p>
+
+<p>A convex body is any shape that has no inward curves. Here's an example of a
+body that's not convex:</p>
+
+<figure>
+  <img src="/r/relative-width-not-convex.svg"
+       width="687" height="520"
+       alt="A shape with an inward dent, marked by an arrow labelled ‘not convex’.">
+</figure>
+
+<p>A plank is a region between two parallel planes (or two parallel lines in
+the plane). The <em>relative width</em> of a plank is the plank's width divided
+by the width of the convex body perpendicular to the plank:</p>
+
+<figure>
+  <img src="/r/relative-width-one-plank.svg" loading="lazy"
+       width="1149" height="700"
+       alt="A plank across a convex body. Its width is 40% of the body's width measured in the same direction.">
+</figure>
+
+<p>In 1951 Thøger Bang conjectured that if planks cover a convex body, their
+relative widths must sum to at least 100%:</p>
+
+<figure>
+  <img src="/r/relative-width-three-planks.svg" loading="lazy"
+       width="1149" height="1070"
+       alt="Three planks covering a convex body, with relative widths 40%, 39%, and 37%, totalling 116%.">
+</figure>
+
+<p>You can <a href="/research/paper/affine-plank/visualization/">play around with this in the
+interactive visualization</a>.</p>
+
+<p>This became known as the Affine Plank Conjecture. The papers below address
+the case of three planks in the plane, which had remained open for 75 years.
+The general conjecture remains open.</p>
+
+<h2>Three planks</h2>
+
+<p>These papers give proofs for triangles and for general convex bodies in
+the plane. Each has an accompanying Lean formalization.</p>
+
+<ul>
+  <li><a href="/research/paper/affine-plank/three-planks-on-a-triangle/">An elementary proof
+  of the affine plank conjecture for three planks on a triangle</a><br>
+  A short proof for triangles using elementary geometry.</li>
+  <li><a href="/research/paper/affine-plank/three-planks-in-the-plane/">The affine plank
+  theorem for three planks in the plane</a><br>
+  A proof for any convex body in the plane.</li>
+</ul>
