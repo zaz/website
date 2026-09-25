@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title | escape }} | Zaz Brown</title>
   {% if page.description %}<meta name="description" content="{{ page.description | escape }}">{% endif %}
+  {% if page.image %}
+  <meta property="og:image" content="{{ page.image | escape }}">
+  <meta name="robots" content="max-image-preview:large">
+  {% endif %}
   {% if page.citation_author %}
   <meta name="citation_title" content="{{ page.title | escape }}">
   <meta name="citation_author" content="{{ page.citation_author | escape }}">
