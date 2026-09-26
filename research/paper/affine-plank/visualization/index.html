@@ -888,19 +888,30 @@ const userHeld=new Set();
 [rw0Sl,rw1Sl,rw2Sl,alphaSl,bandSl,...etSl,ctT1Sl,ctT2Sl,hexA1Sl,hexA2Sl,hexDbSl,...fthSl,...fpSl]
   .forEach(sl=>sl.addEventListener('input',e=>{if(e.isTrusted)userHeld.add(sl.id);sync();}));
 
+// Share the selected family in the URL; Back and Forward restore it too.
+function selectFamily(){
+  const name=location.hash.slice(1);
+  family=Object.hasOwn(FAMILIES,name)?name:'free';
+  document.querySelectorAll('.family-btn').forEach(btn=>{
+    const active=btn.dataset.family===family;
+    btn.classList.toggle('active',active);
+    const details=btn.closest('details');
+    if(active&&details)details.open=true;
+  });
+  const p=FAMILIES[family].preset;
+  rw0Sl.value=p[0];rw1Sl.value=p[1];
+  if(p.length>2)alphaSl.value=p[2];
+  applyRows();
+  sync();
+  buildSliderCh();
+}
 document.querySelectorAll('.family-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    document.querySelectorAll('.family-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    family=btn.dataset.family;
-    const p=FAMILIES[family].preset;
-    rw0Sl.value=p[0];rw1Sl.value=p[1];
-    if(p.length>2)alphaSl.value=p[2];
-    applyRows();
-    sync();
-    buildSliderCh();
+    if(location.hash.slice(1)===btn.dataset.family)selectFamily();
+    else location.hash=btn.dataset.family;
   });
 });
+window.addEventListener('hashchange',selectFamily);
 
 // ══════════════════════════════════════════════════════════════
 //  Ambient drift: slow quasi-periodic motion through the active
@@ -984,9 +995,7 @@ themeBtn.addEventListener('click',()=>{
   themeGlyph();
 });
 themeGlyph();
-applyRows();
-sync();
-buildSliderCh();
+selectFamily();
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)playBtn.textContent='▶';
 else setPlaying(true);
 requestAnimationFrame(frame);
