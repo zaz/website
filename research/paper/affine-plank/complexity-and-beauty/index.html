@@ -248,7 +248,7 @@ html.reveal-full-page{scrollbar-gutter:auto;scroll-padding:0}
 body.presentation-page{
  --slide-font:Georgia,"Noto Serif",serif;
  --slide-heading:clamp(30px,min(3.4vw,6.2vh),90px);
- --slide-body:clamp(21px,min(2.15vw,4vh),52px);
+ --slide-body:clamp(18px,min(2vw,3.4vh),48px);
  --slide-caption:clamp(18px,min(1.6vw,3vh),34px);
  --slide-detail:clamp(16px,min(1.3vw,2.4vh),28px);
  --slide-small:clamp(16px,min(1.1vw,2.2vh),22px);
@@ -345,6 +345,8 @@ body.presentation-page{
 .presentation-page .gap-intro-copy,.presentation-page .gap-solve-copy{min-width:0;font-size:var(--slide-body);line-height:1.5}
 .presentation-page .gap-intro-copy{max-width:18em;justify-self:start}
 .presentation-page .gap-intro-copy p+p,.presentation-page .gap-solve-copy p+p{margin-top:1em}
+.presentation-page .gap-solve-copy{line-height:1.4}
+.presentation-page .gap-solve-copy p+p{margin-top:.75em}
 .presentation-page .gap-intro-copy .gap-name{font-style:italic}
 .presentation-page .gap-solve-copy h1{margin:0 0 .75em;font-size:var(--slide-heading);line-height:1.2}
 .presentation-page .parameter-story{height:100%;min-height:430px;gap:14px;position:relative}
@@ -428,8 +430,7 @@ body.presentation-page{
  .presentation-page .gap-solve-figure{height:220px;flex:none}
  .presentation-page .gap-solve-diagram{height:100%;width:100%;aspect-ratio:auto}
  .presentation-page .gap-intro-copy{font-size:clamp(16px,4.3vw,24px);line-height:1.38}
- .presentation-page .gap-solve-copy{font-size:var(--slide-detail);line-height:1.4}
- .presentation-page .gap-solve-copy p+p{margin-top:.75em}
+ .presentation-page .gap-solve-copy{font-size:var(--slide-detail)}
  .presentation-page .gap-solve-copy h1{font-size:var(--slide-heading);margin-bottom:.5em}
  .presentation-page .gap-story{min-height:500px;gap:8px}
  .presentation-page .gap-views{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(160px,.85fr) minmax(225px,1fr);gap:14px}
@@ -447,7 +448,7 @@ body.presentation-page{
  .presentation-page .gap-equation{min-height:43px;padding-top:5px;padding-bottom:5px}
 }
 @media(max-height:580px) and (min-width:701px){
- .presentation-page .reveal .slides>.deck-slide{padding-bottom:max(var(--slide-padding),60px)}
+ .presentation-page .reveal .slides>.deck-slide{padding-block:24px}
  .presentation-page .title-content h1{font-size:clamp(28px,6vh,42px)}
  .presentation-page .title-content .conjecture-title{font-size:clamp(48px,12vh,78px)}
  .presentation-page .parameter-story,.presentation-page .gap-story{min-height:350px}
