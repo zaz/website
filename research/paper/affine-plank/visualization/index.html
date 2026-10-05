@@ -10,42 +10,44 @@
 *{margin:0;padding:0;box-sizing:border-box}
 [hidden]{display:none!important}
 :root{
-  --bg-page:#090c14; --bg0:#101420; --bg1:#06080e;
-  --ink:#c0b8a8; --title:#a09078; --muted:#5a5040; --sect:#706050;
-  --val:#8a8070; --legend:#4a4238; --tag:#7a7060;
-  --btn-bg:rgba(160,140,120,.08); --btn-bd:rgba(160,140,120,.15);
-  --btn-bg-h:rgba(160,140,120,.15);
-  --btn-bg-a:rgba(120,180,140,.12); --btn-bd-a:rgba(120,180,140,.3); --btn-fg-a:#8ac0a0;
+  color-scheme:dark;
+  --bg-page:#222;
+  --ink:#ddd; --title:#ddd; --muted:#aaa; --sect:#bbb;
+  --val:#ccc; --legend:#aaa; --tag:#aaa;
+  --btn-bg:rgba(255,255,255,.04); --btn-bd:rgba(255,255,255,.18);
+  --btn-bg-h:rgba(255,255,255,.09);
+  --btn-bg-a:rgba(255,255,255,.12); --btn-bd-a:rgba(255,255,255,.35); --btn-fg-a:#eee;
   --ok:#7ab890; --bad:#c87868; --warn:#c8a868;
-  --grid:#a09080; --grid-o:.035;
-  --tri:#a09070; --tri-halo:rgba(200,180,140,.06); --tri-fill:rgba(180,160,120,.015);
-  --vdot:#b0a090; --vlabel:#807060;
+  --grid:#aaa; --grid-o:.035;
+  --tri:#aaa; --tri-halo:rgba(200,200,200,.06); --tri-fill:rgba(180,180,180,.015);
+  --vdot:#bbb; --vlabel:#aaa;
   --r0-fill:rgba(192,128,96,.17); --r0-line:rgba(192,128,96,.35); --r0-text:rgba(192,128,96,.8);
   --r1-fill:rgba(106,168,136,.17); --r1-line:rgba(106,168,136,.35); --r1-text:rgba(106,168,136,.8);
   --r2-fill:rgba(120,152,192,.17); --r2-line:rgba(120,152,192,.35); --r2-text:rgba(120,152,192,.8);
   --gap-fill:rgba(200,100,100,.3); --gap-stroke:rgba(255,150,150,.15);
   --tseg:rgba(200,120,104,.7); --tseg-label:#c87868;
   --gold:#e0c890; --gold-dim:#c0a870;
-  --frame-bd:rgba(180,160,120,.06);
+  --frame-bd:rgba(255,255,255,.12);
 }
 :root[data-theme=light]{
-  --bg-page:#efe8d8; --bg0:#faf5e9; --bg1:#e7dec9;
-  --ink:#4a4238; --title:#7a5f35; --muted:#8a7c66; --sect:#7a6a50;
-  --val:#6a5f50; --legend:#8a7c66; --tag:#9a8a72;
-  --btn-bg:rgba(110,90,60,.07); --btn-bd:rgba(110,90,60,.2);
-  --btn-bg-h:rgba(110,90,60,.14);
-  --btn-bg-a:rgba(60,130,90,.12); --btn-bd-a:rgba(60,130,90,.4); --btn-fg-a:#2f6d4c;
+  color-scheme:light;
+  --bg-page:#fff;
+  --ink:#222; --title:#222; --muted:#666; --sect:#555;
+  --val:#444; --legend:#666; --tag:#777;
+  --btn-bg:rgba(0,0,0,.035); --btn-bd:rgba(0,0,0,.18);
+  --btn-bg-h:rgba(0,0,0,.07);
+  --btn-bg-a:rgba(0,0,0,.09); --btn-bd-a:rgba(0,0,0,.35); --btn-fg-a:#222;
   --ok:#33754f; --bad:#a84a36; --warn:#8a6a10;
-  --grid:#6a5a40; --grid-o:.06;
-  --tri:#6a5a40; --tri-halo:rgba(90,70,40,.07); --tri-fill:rgba(120,100,60,.03);
-  --vdot:#5a4c3a; --vlabel:#6a5a48;
+  --grid:#666; --grid-o:.06;
+  --tri:#666; --tri-halo:rgba(80,80,80,.07); --tri-fill:rgba(100,100,100,.03);
+  --vdot:#555; --vlabel:#666;
   --r0-fill:rgba(168,84,44,.2); --r0-line:rgba(168,84,44,.4); --r0-text:rgba(150,70,35,.95);
   --r1-fill:rgba(44,122,82,.2); --r1-line:rgba(44,122,82,.4); --r1-text:rgba(30,105,68,.95);
   --r2-fill:rgba(44,92,156,.2); --r2-line:rgba(44,92,156,.4); --r2-text:rgba(35,80,140,.95);
   --gap-fill:rgba(190,70,55,.35); --gap-stroke:rgba(150,45,35,.3);
   --tseg:rgba(170,70,50,.8); --tseg-label:#a05540;
   --gold:#a87b18; --gold-dim:#8a6a20;
-  --frame-bd:rgba(110,90,60,.15);
+  --frame-bd:rgba(0,0,0,.15);
 }
 body{
   background:var(--bg-page);color:var(--ink);
@@ -70,8 +72,6 @@ h1{
   border:1px solid var(--frame-bd);border-radius:6px;overflow:hidden;
 }
 svg{width:100%;height:100%;display:block}
-.bgstop0{stop-color:var(--bg0)}
-.bgstop1{stop-color:var(--bg1)}
 .grid{opacity:var(--grid-o)}
 .controls{width:260px;display:flex;flex-direction:column;gap:.5rem;font-size:.72rem}
 .family-btn{
@@ -84,7 +84,7 @@ svg{width:100%;height:100%;display:block}
 .family-btn.active{background:var(--btn-bg-a);border-color:var(--btn-bd-a);color:var(--btn-fg-a)}
 .slider-row{display:flex;align-items:center;gap:.4rem}
 .slider-row label{width:2.4rem;text-align:right;color:var(--muted);font-size:.62rem}
-.slider-row input[type=range]{flex:1;accent-color:var(--ok);height:14px}
+.slider-row input[type=range]{flex:1;accent-color:var(--ink);height:14px}
 .slider-row .val{width:3rem;text-align:left;font-size:.62rem;color:var(--val)}
 .section-label{
   font-family:'Cormorant Garamond',serif;font-weight:600;
@@ -136,10 +136,6 @@ document.documentElement.setAttribute('data-theme',
 <button id="playBtn" title="Pause / play the drift"></button>
 <svg id="viz" viewBox="0 0 640 580" preserveAspectRatio="xMidYMid meet">
   <defs>
-    <radialGradient id="bg" cx="50%" cy="46%" r="58%">
-      <stop offset="0%" class="bgstop0"/>
-      <stop offset="100%" class="bgstop1"/>
-    </radialGradient>
     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation="4" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -158,7 +154,7 @@ document.documentElement.setAttribute('data-theme',
   <div id="coverageEl" style="font-size:.82rem"></div>
 </div>
 
-<div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.72rem;color:var(--legend);text-align:center;margin-top:.5rem;line-height:1.4">
+<div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--legend);text-align:center;margin-top:.5rem;line-height:1.4">
   Gold marks contacts. Drag a slider to hold it; click the diagram to pause or resume.
 </div>
 </div>
@@ -341,7 +337,6 @@ function setLine(el,[x1,y1],[x2,y2]){
 }
 
 // ── Static scene ──
-mkEl('rect',{x:0,y:0,width:VW,height:VH,fill:'url(#bg)'});
 const gridG=mkEl('g',{class:'grid'});
 for(let gx=30;gx<VW;gx+=35)for(let gy=30;gy<VH;gy+=35)
   mkEl('circle',{cx:gx,cy:gy,r:'.4',fill:'var(--grid)'},gridG);
