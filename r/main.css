@@ -205,6 +205,17 @@ main.article {
 	font-size: clamp(2rem, 6vw, 5rem);
 }
 
+.article article {
+	font-size: 1.25rem;
+	line-height: 1.6;
+}
+
+@media (max-width: 40rem) {
+	.article article {
+		font-size: 1.125rem;
+	}
+}
+
 .article article a {
 	text-decoration: underline;
 }
