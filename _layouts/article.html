@@ -17,6 +17,12 @@
   {% endif %}
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/r/main.css">
+  {% for stylesheet in page.stylesheets %}
+  <link rel="stylesheet" href="{{ stylesheet | escape }}">
+  {% endfor %}
+  {% for script in page.scripts %}
+  <script defer src="{{ script | escape }}"></script>
+  {% endfor %}
 </head>
 <body>
   <main class="article">

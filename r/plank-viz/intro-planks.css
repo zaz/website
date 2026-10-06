@@ -1,0 +1,41 @@
+/* Scoped so the same diagrams can be embedded without changing the page. */
+[data-intro-planks]{--ink:#25262b;--grid:#b4bac5;--violet:#0000a6;--green:#007300;--red:#a62133;--violet-fill:#dbdbff;--green-fill:#e0ffe0;--red-fill:#ffdde1;--gap:#ffff00;--gap-edge:#c8bf00}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) [data-intro-planks]{--ink:#e6e5e9;--grid:#747a89;--violet:#b2aeff;--green:#78dea0;--red:#ff8c9d;--violet-fill:#343058;--green-fill:#213f2d;--red-fill:#4d2932;--gap-edge:#ffff00}}
+:root[data-theme="dark"] [data-intro-planks]{--ink:#e6e5e9;--grid:#747a89;--violet:#b2aeff;--green:#78dea0;--red:#ff8c9d;--violet-fill:#343058;--green-fill:#213f2d;--red-fill:#4d2932;--gap-edge:#ffff00}
+[data-intro-planks] .intro-plank-diagram{position:relative;width:100%;min-height:0}
+[data-intro-planks] .plank-diagram svg{display:block;width:100%;height:100%;overflow:visible;touch-action:none;cursor:inherit}
+[data-intro-planks] .plank-diagram svg *{cursor:inherit}
+[data-intro-planks] [fill="#DBDBFF"]{fill:var(--violet-fill)}
+[data-intro-planks] [fill="#E0FFE0"]{fill:var(--green-fill)}
+[data-intro-planks] [fill="#FFDDE1"]{fill:var(--red-fill)}
+[data-intro-planks] [stroke="#0000A6"]{stroke:var(--violet)}
+[data-intro-planks] [stroke="#007300"]{stroke:var(--green)}
+[data-intro-planks] [stroke="#A62133"]{stroke:var(--red)}
+[data-intro-planks] [fill="#0000A6"]{fill:var(--violet)}
+[data-intro-planks] [fill="#007300"]{fill:var(--green)}
+[data-intro-planks] [fill="#A62133"]{fill:var(--red)}
+[data-intro-planks] [stroke="#111111"],[data-intro-planks] [stroke="#333333"]{stroke:var(--ink)}
+[data-intro-planks] [stroke="#AAAAAA"]{stroke:var(--grid)}
+[data-intro-planks] .plank-strip{mix-blend-mode:multiply}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) [data-intro-planks] .plank-strip{mix-blend-mode:screen}}
+:root[data-theme="dark"] [data-intro-planks] .plank-strip{mix-blend-mode:screen}
+[data-intro-planks] .handle{touch-action:none;outline:none}
+[data-intro-planks] .handle-visible{opacity:0;transition:opacity .12s;pointer-events:none}
+[data-intro-planks] .handle.plank-hovered .handle-visible{opacity:.26}
+[data-intro-planks] .handle.revealed .handle-visible{opacity:.65}
+[data-intro-planks] .handle.nearest .handle-visible,[data-intro-planks] .handle:focus-visible:not(.pointer-focused) .handle-visible,[data-intro-planks] .handle.dragging .handle-visible{opacity:1}
+[data-intro-planks] .handle-hit{fill:transparent;stroke:none;pointer-events:all}
+[data-intro-planks] .handle-mark{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+[data-intro-planks] .handle.nearest .handle-mark,[data-intro-planks] .handle.dragging .handle-mark,[data-intro-planks] .handle:focus-visible:not(.pointer-focused) .handle-mark{stroke-width:2.4}
+[data-intro-planks] button{font:inherit;color:inherit;border:0;background:none;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+[data-intro-planks] .intro-plank-hint{cursor:grab}
+[data-intro-planks] .intro-plank-controls{font:14px/1.6 system-ui,sans-serif;text-align:center;margin-top:8px}
+[data-intro-planks] .intro-plank-reset{margin-left:10px}
+[data-intro-planks] button:focus-visible{outline:2px solid var(--violet);outline-offset:4px}
+[data-intro-planks] .width-violet{color:var(--violet)}
+[data-intro-planks] .width-green{color:var(--green)}
+[data-intro-planks] .width-red{color:var(--red)}
+.article [data-intro-planks] .intro-plank-diagram{aspect-ratio:1149/1070;max-width:42rem;margin:auto}
+.article [data-intro-planks] figcaption{text-align:center}
+.article [data-intro-planks] .intro-width-sum{font-size:1.25em}
+.conditional-reset[hidden]{display:inline-block!important;visibility:hidden}

@@ -1,0 +1,72 @@
+.article .landing-planks .intro-plank-diagram {
+  width: 100%;
+  max-width: 32rem;
+  aspect-ratio: 1149 / 1070;
+  margin: auto;
+}
+
+.landing-planks .intro-plank-diagram > svg {
+  margin: 0;
+  vertical-align: top;
+}
+
+.article .landing-planks .intro-width-sum {
+  font-size: 1em;
+}
+
+.landing-planks figcaption {
+  margin-top: .75rem;
+}
+
+.landing-planks .intro-plank-controls {
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-top: .4rem;
+}
+
+.landing-planks [data-plank-hint] {
+  cursor: grab;
+}
+
+.landing-plank-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  margin-left: .5rem;
+  vertical-align: middle;
+}
+
+.landing-planks .landing-plank-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+}
+
+.landing-plank-play svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  fill: currentColor;
+}
+
+.landing-plank-play .pause-icon,
+.landing-plank-play[aria-pressed="true"] .play-icon {
+  display: none;
+}
+
+.landing-plank-play[aria-pressed="true"] .pause-icon {
+  display: block;
+}
+
+.landing-planks .intro-plank-reset {
+  margin: 0;
+}
+
+.landing-planks .intro-plank-reset[hidden] {
+  display: inline-block;
+  visibility: hidden;
+}

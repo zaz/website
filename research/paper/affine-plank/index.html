@@ -3,17 +3,44 @@ layout: article
 title: The Affine Plank Conjecture
 description: The conjecture has remained open for 75 years. We prove it for three planks in the plane.
 image: https://zazbrown.com/r/relative-width-three-planks.png
+stylesheets: [/r/plank-viz/intro-planks.css, /r/plank-viz/landing.css]
+scripts: [/r/plank-viz/core.js, /r/plank-viz/landing.js]
 ---
 <p>In 1951 Thøger Bang conjectured that if planks cover a convex body, their
 relative widths must sum to at least 100%:</p>
 
-<figure>
-  <img src="/r/relative-width-three-planks.svg" loading="lazy"
+<figure class="landing-planks">
+  <div class="plank-diagram intro-plank-diagram">
+    <img src="/r/relative-width-three-planks.svg"
        width="1149" height="1070"
        alt="Three planks covering a convex body, with relative widths 40%, 39%, and 37%, totalling 116%.">
+  </div>
+  <figcaption hidden>
+    <math class="intro-width-sum" aria-label="Sum of the relative widths">
+      <mrow>
+        <mrow class="width-violet"><mtext data-width="0">40</mtext><mtext>%</mtext></mrow>
+        <mo>+</mo>
+        <mrow class="width-green"><mtext data-width="1">39</mtext><mtext>%</mtext></mrow>
+        <mo>+</mo>
+        <mrow class="width-red"><mtext data-width="2">37</mtext><mtext>%</mtext></mrow>
+        <mo data-width-relation>=</mo><mtext data-width-sum>116</mtext><mtext>%</mtext>
+      </mrow>
+    </math>
+    <div class="intro-plank-controls">
+      Grab planks to <button type="button" data-plank-hint="move">move</button>,
+      <button type="button" data-plank-hint="resize">resize</button>, and
+      <button type="button" data-plank-hint="rotate">rotate</button>.
+      <span class="landing-plank-actions">
+        <button type="button" class="landing-plank-play" aria-label="Animate" title="Animate" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path class="play-icon" d="M8 5 19 12 8 19Z"/><path class="pause-icon" d="M7 5H10V19H7ZM14 5H17V19H14Z"/></svg>
+        </button>
+        <button type="button" class="intro-plank-reset" hidden>Reset.</button>
+      </span>
+    </div>
+  </figcaption>
 </figure>
 
-<p>To understand what this means see my <a href="/research/paper/affine-plank/complexity-and-beauty/#/conjecture">interactive presentation</a>.
+<p>To understand what this means see my <a href="/research/paper/affine-plank/complexity-and-beauty/">interactive presentation</a>.
 Or if you just want to see something beautiful, check out the
 <a href="/research/paper/affine-plank/complexity-and-beauty/#/beauty/2">last slide</a>.</p>
 
@@ -40,4 +67,4 @@ Kevin Barreto for inspiring me to tackle ambitious mathematical problems with LL
 and the <a href="https://aria.org.uk/opportunity-spaces/trust-everything-everywhere/safeguarded-ai">ARIA Safeguarded AI programme</a> for providing funding for LLM usage.</p>
 
 <p>I'd also like to thank Orion Reed for <a href="https://orionreed.github.io/bireactive/">Bireactive</a>,
-which is used in the <a href="/research/paper/affine-plank/complexity-and-beauty/#/conjecture">interactive presentation</a>.</p>
+which is used in the <a href="/research/paper/affine-plank/complexity-and-beauty/">interactive presentation</a>.</p>
