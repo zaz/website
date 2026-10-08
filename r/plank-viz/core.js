@@ -2223,8 +2223,10 @@ class PlankModel extends EventTarget {
   const t=this.motionTime,bodyTime=t*.65,angle=.1*Math.sin(bodyTime*.12)+bodyTime*.018,mix=(1-Math.cos(t*.25))/2;
   // Undo the target's rotation to match outward normals before the Minkowski
   // blend. Apply a common rotation afterwards; convexity is preserved.
+  // Keep rotation independent of mix: angle grows with time, so multiplying
+  // it by the oscillating mix would make each morph cycle spin faster.
   const target=G.makeBody(bodyTime,'morph').map(p=>rotate(p,-angle));
-  const body=this.motionBody.map((p,i)=>rotate([(1-mix)*p[0]+mix*target[i][0]*190,(1-mix)*p[1]+mix*target[i][1]*190],angle*mix)),q=this.motionBase.map((q,i)=>clamp(q+this.motionDelta(i)));
+  const body=this.motionBody.map((p,i)=>rotate([(1-mix)*p[0]+mix*target[i][0]*190,(1-mix)*p[1]+mix*target[i][1]*190],angle)),q=this.motionBase.map((q,i)=>clamp(q+this.motionDelta(i)));
   if(this.heldPlank){
    // Hold world-space bounds, including width, while the body changes beneath
    // the pointer. Relative width follows the body's current support span.
