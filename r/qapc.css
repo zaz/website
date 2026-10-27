@@ -1,0 +1,20 @@
+.article-title-with-image {
+	position: relative;
+}
+
+.article-title-with-image > img {
+	display: none;
+}
+
+/* Keep the ornament in the margin without narrowing the title. */
+@media screen and (min-width: 70rem) {
+	.article-title-with-image > img {
+		display: block;
+		position: absolute;
+		right: calc(100% + 1rem);
+		top: 50%;
+		transform: translateY(-50%);
+		width: 8rem;
+		height: auto;
+	}
+}
