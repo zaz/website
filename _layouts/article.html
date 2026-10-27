@@ -4,13 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title | escape }} | Zaz Brown</title>
-  {% if page.description %}<meta name="description" content="{{ page.description | escape }}">{% endif %}
+  <meta property="og:title" content="{{ page.title | escape }}">
+  {% if page.description %}
+  <meta name="description" content="{{ page.description | escape }}">
+  <meta property="og:description" content="{{ page.description | escape }}">
+  {% endif %}
   {% if page.image %}
   <meta property="og:image" content="{{ page.image | escape }}">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="robots" content="max-image-preview:large">
   {% endif %}
   {% if page.citation_author %}
-  <meta name="citation_title" content="{{ page.title | escape }}">
+  <meta name="citation_title" content="{% if page.citation_title %}{{ page.citation_title | escape }}{% else %}{{ page.title | escape }}{% endif %}">
   <meta name="citation_author" content="{{ page.citation_author | escape }}">
   <meta name="citation_publication_date" content="{{ page.citation_year }}">
   <meta name="citation_pdf_url" content="{{ page.citation_pdf | escape }}">
