@@ -201,8 +201,14 @@ main.article {
 	text-align: left;
 }
 
+.article > header {
+	container-type: inline-size;
+}
+
 .article h1 {
-	font-size: clamp(2rem, 6vw, 5rem);
+	font-size: clamp(2rem, 6.25cqi, 3rem);
+	line-height: 1.1;
+	text-wrap: balance;
 }
 
 .article article {
